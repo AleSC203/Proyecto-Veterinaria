@@ -16,35 +16,36 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
     public dlgVentanaMantRaza(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        nombreRaza = new Raza();
     }
     
-    public dlgVentanaMantRaza(TipoDeEdicion tipoEdit, String nombreRazaP,String tipoAnimal){
+    public dlgVentanaMantRaza(TipoDeEdicion tipoEdit, String nombreRazaP, String tipoAnimal) {
         initComponents();
-         switch(tipoEdit){
-           case AGREGAR:
-               txtNombreRaza.setEnabled(true);
-               rdbGato.setEnabled(true);
-               rdbPerro.setEnabled(true);
-               
-               break;
-           case MODIFICAR:
-               txtNombreRaza.setEnabled(true);
-                rdbGato.setEnabled(false);
-               rdbPerro.setEnabled(false);
-               nombreRaza.setTipoRaza(nombreRazaP);
-               break;
-           case CONSULTAR:
-               txtNombreRaza.setEnabled(false);
-                rdbGato.setEnabled(false);
-               rdbPerro.setEnabled(false);
-               break;
-          
-       }
-        if (nombreRazaP != null) {
-           
-            nombreRaza.setTipoRaza(nombreRazaP);
+        switch (tipoEdit) {
+            case AGREGAR:
+                this.txtNombreRaza.setEnabled(true);
+                this.rdbGato.setEnabled(true);
+                this.rdbPerro.setEnabled(true);
+
+                break;
+            case MODIFICAR:
+                this.txtNombreRaza.setEnabled(true);
+                this.rdbGato.setEnabled(false);
+                this.rdbPerro.setEnabled(false);
+                this.nombreRaza.setTipoRaza(tipoAnimal);
+                this.tipoAnimal = tipoAnimal;
+                this.nombreRaza.setDescripcion(nombreRazaP);
+                break;
+            case CONSULTAR:
+                this.txtNombreRaza.setEnabled(false);
+                this.rdbGato.setEnabled(false);
+                this.rdbPerro.setEnabled(false);
+                break;
+
         }
+        
        this.tipo = tipoEdit;
+       
     }
 
     
@@ -60,6 +61,8 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtNombreRaza = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -87,29 +90,14 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Gatito.png"))); // NOI18N
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/perro.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombreRaza, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAceptarRaza)
-                                .addGap(42, 42, 42)
-                                .addComponent(btnCancelar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(rdbGato)
-                                .addGap(81, 81, 81)
-                                .addComponent(rdbPerro)))))
-                .addContainerGap(96, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,6 +107,30 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(195, 195, 195))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(txtNombreRaza, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAceptarRaza)
+                                .addGap(42, 42, 42)
+                                .addComponent(btnCancelar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(rdbGato)
+                                .addGap(81, 81, 81)
+                                .addComponent(rdbPerro)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(jLabel1)))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,8 +142,10 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
                 .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rdbGato)
-                    .addComponent(rdbPerro))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                    .addComponent(rdbPerro)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptarRaza)
                     .addComponent(btnCancelar))
@@ -151,7 +165,7 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
             case AGREGAR: {
                 try {
                     if (Raza.consultar(nombreRaza.getTipoRaza()) == null) {
-                        Raza raza = new Raza(nombreRaza.getTipoRaza(),nombreRaza.getDescripcion());
+                         this.nombreRaza = new Raza(nombreRaza.getTipoRaza(),nombreRaza.getDescripcion());
                     } else {
                         JOptionPane.showMessageDialog(this,
                                 "Este Tipo de Raza ya existe");
@@ -166,11 +180,14 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
 
             case MODIFICAR:
                 if (txtNombreRaza != null) {
-                     nombreRaza.setTipoRaza(txtNombreRaza.getText());
+                    String nombreraza = txtNombreRaza.getText();
+                    this.nombreRaza = new Raza(this.tipoAnimal, nombreraza);
                 }
                 break;
         }
+ 
         MantenimientoRazas.setTipoRaza(nombreRaza); //Esto lo hace para que en el otro frame ya tenga el nombre de la raza
+ 
         this.dispose();
     }//GEN-LAST:event_btnAceptarRazaActionPerformed
 
@@ -225,6 +242,8 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lblNumRazasGuardadas;
     private javax.swing.JRadioButton rdbGato;
     private javax.swing.JRadioButton rdbPerro;

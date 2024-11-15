@@ -64,7 +64,6 @@
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
             <Property name="text" type="java.lang.String" value="Reportes"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="opcionListPacientes">
@@ -113,7 +112,6 @@
           <Properties>
             <Property name="mnemonic" type="int" value="101"/>
             <Property name="text" type="java.lang.String" value="Mantenimientos"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="opcionManEspeciesyRazas">

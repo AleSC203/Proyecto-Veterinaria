@@ -1,12 +1,16 @@
 
 package Frames;
 
+import ClasesPaciente.Raza;
 import Clases_Cita.Motivo;
 import Clases_Cita.TipoMotivo;
 import Clases_Cita.tipoVacuna;
 import static Frames.TipoDeEdicion.AGREGAR;
 import static Frames.TipoDeEdicion.CONSULTAR;
 import static Frames.TipoDeEdicion.MODIFICAR;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 public class dlgMantMotivo extends javax.swing.JDialog {
@@ -14,8 +18,8 @@ public class dlgMantMotivo extends javax.swing.JDialog {
     private String descripcion;
     private int precio;
     private boolean examen;
-   
     private TipoDeEdicion edit;
+    private Motivo motivo;
     
     public dlgMantMotivo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -36,8 +40,6 @@ public class dlgMantMotivo extends javax.swing.JDialog {
                this.cboMotivo.setEnabled(true);
                this.cboTipoVacuna.setEnabled(true);
                this.checkAplicaExamen.setEnabled(true);
-               
-               
                this.tipoVacunA = nombreVacunaP;
                this.precio = precioP;
                this.examen = examen;
@@ -81,6 +83,8 @@ public class dlgMantMotivo extends javax.swing.JDialog {
         txtPrecioMotivo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         cboTipoVacuna = new javax.swing.JComboBox<>();
+        btnGuardar = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -94,6 +98,15 @@ public class dlgMantMotivo extends javax.swing.JDialog {
 
         jLabel3.setText("Tipo Vacuna");
 
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnVolver.setText("Volver");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,31 +116,35 @@ public class dlgMantMotivo extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(138, 378, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(138, 223, Short.MAX_VALUE))
+                                .addComponent(cboMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(cboMotivo, javax.swing.GroupLayout.Alignment.LEADING, 0, 203, Short.MAX_VALUE)
-                                    .addComponent(cboTipoVacuna, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(cboTipoVacuna, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(checkAplicaExamen))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(38, 38, 38)
                                 .addComponent(jLabel2))
-                            .addComponent(txtPrecioMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                            .addComponent(txtPrecioMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(checkAplicaExamen))
+                        .addGap(14, 14, 14))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(134, 134, 134)
+                .addComponent(btnGuardar)
+                .addGap(48, 48, 48)
+                .addComponent(btnVolver)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(96, Short.MAX_VALUE)
+                .addContainerGap(58, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -139,15 +156,55 @@ public class dlgMantMotivo extends javax.swing.JDialog {
                         .addComponent(txtPrecioMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(49, 49, 49)
                 .addComponent(jLabel3)
-                .addGap(15, 15, 15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboTipoVacuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkAplicaExamen))
-                .addGap(22, 22, 22))
+                    .addComponent(checkAplicaExamen)
+                    .addComponent(cboTipoVacuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnVolver))
+                .addGap(17, 17, 17))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try {
+            // TODO add your handling code here:
+            
+            switch (this.edit) {
+                case AGREGAR: {
+                    try {
+                        //Necesito Validacion de si ya esta creado o no aunque creo que no se puede repetir
+                        motivo = new Motivo(this.examen, this.descripcion, this.precio, this.tipoVacunA);
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                }
+                
+                break;
+                
+                case MODIFICAR:
+                    if (txtPrecioMotivo != null && cboMotivo.getSelectedItem() != null  && cboTipoVacuna.getSelectedItem() != null) {
+                        boolean examenP = false;
+                        if (checkAplicaExamen.isSelected()) {
+                            examenP = true;
+                        }
+                        String descripcionP = (String)cboMotivo.getSelectedItem();
+                        int precioP = Integer.parseInt(txtPrecioMotivo.getText());
+                        tipoVacuna vacunaP = (tipoVacuna)cboTipoVacuna.getSelectedItem();
+                        motivo = new Motivo(examenP, descripcionP, precioP, vacunaP);
+                    }
+                    break;
+            }
+            Motivo.agregar(motivo); //Esto lo hace para que en el otro frame ya tenga el nombre de la raza
+            this.dispose();
+        } catch (Exception ex) {
+            Logger.getLogger(dlgMantMotivo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
   
     public static void main(String args[]) {
@@ -190,6 +247,8 @@ public class dlgMantMotivo extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cboMotivo;
     private javax.swing.JComboBox<tipoVacuna> cboTipoVacuna;
     private javax.swing.JCheckBox checkAplicaExamen;

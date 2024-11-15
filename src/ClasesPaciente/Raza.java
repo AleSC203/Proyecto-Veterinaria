@@ -20,6 +20,10 @@ private int numeroRaza;
         
     }
 
+    public Raza() {
+    }
+    
+
     public String getTipoRaza() {
         return tipoRaza;
     }

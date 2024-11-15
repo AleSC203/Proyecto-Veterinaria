@@ -84,7 +84,6 @@ public class OpcionesVeterinaria extends javax.swing.JFrame {
         menuBar.add(helpMenu);
 
         jMenu3.setText("Reportes");
-        jMenu3.setEnabled(false);
 
         opcionListPacientes.setText("Listado de pacientes");
         opcionListPacientes.addActionListener(new java.awt.event.ActionListener() {
@@ -130,7 +129,6 @@ public class OpcionesVeterinaria extends javax.swing.JFrame {
 
         editMenu.setMnemonic('e');
         editMenu.setText("Mantenimientos");
-        editMenu.setEnabled(false);
 
         opcionManEspeciesyRazas.setMnemonic('p');
         opcionManEspeciesyRazas.setText("Mantenimiento de Especies y Razas");
@@ -187,7 +185,8 @@ public class OpcionesVeterinaria extends javax.swing.JFrame {
     }//GEN-LAST:event_opcionListPacientesActionPerformed
 
     private void opcionManEspeciesyRazasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionManEspeciesyRazasActionPerformed
-
+        MantenimientoRazas obj = new MantenimientoRazas();
+        obj.setVisible(true);
         
     }//GEN-LAST:event_opcionManEspeciesyRazasActionPerformed
 
