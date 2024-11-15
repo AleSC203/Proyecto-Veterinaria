@@ -25,7 +25,7 @@ public class dlgMantMotivo extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-    public dlgMantMotivo(TipoDeEdicion tipoEdit,String descripcionP, tipoVacuna nombreVacunaP, int precioP, boolean examen){
+    public dlgMantMotivo(TipoDeEdicion tipoEdit,Motivo motivoP){
         initComponents();
          switch(tipoEdit){
            case AGREGAR:
@@ -40,9 +40,7 @@ public class dlgMantMotivo extends javax.swing.JDialog {
                this.cboMotivo.setEnabled(true);
                this.cboTipoVacuna.setEnabled(true);
                this.checkAplicaExamen.setEnabled(true);
-               this.tipoVacunA = nombreVacunaP;
-               this.precio = precioP;
-               this.examen = examen;
+               this.motivo = motivoP;
              
                break;
                
@@ -52,22 +50,16 @@ public class dlgMantMotivo extends javax.swing.JDialog {
                cboTipoVacuna.setEnabled(false);
                checkAplicaExamen.setEnabled(false);
                
-               txtPrecioMotivo.setText(precioP + "");
-               cboMotivo.setSelectedItem(descripcionP);
-               cboTipoVacuna.setSelectedItem(this.tipoVacunA.getDescripcion());
+               txtPrecioMotivo.setText(motivoP.getPrecio() + "");
+               cboMotivo.setSelectedItem(motivoP.getDescripcion());
+               cboTipoVacuna.setSelectedItem(motivoP.getVacuna());
                checkAplicaExamen.setSelected(examen);
                break;
           
        }
-        if (descripcionP != null || nombreVacunaP != null || precioP != 0 ) {
-           this.descripcion = descripcionP;
-           this.tipoVacunA = nombreVacunaP;
-           this.precio = precioP;
-           this.examen = examen;
-        }
+        
        this.edit = tipoEdit;
-       Motivo motivo = new Motivo(this.examen, this.descripcion, this.precio, this.tipoVacunA);
-       internalMotivo.setMotivo(motivo);
+      
        
     }
 
@@ -106,6 +98,11 @@ public class dlgMantMotivo extends javax.swing.JDialog {
         });
 
         btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -171,23 +168,24 @@ public class dlgMantMotivo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        try {
+       
             // TODO add your handling code here:
             
             switch (this.edit) {
                 case AGREGAR: {
                     try {
                         //Necesito Validacion de si ya esta creado o no aunque creo que no se puede repetir
-                        motivo = new Motivo(this.examen, this.descripcion, this.precio, this.tipoVacunA);
+                        this.motivo = new Motivo(this.examen, this.descripcion, this.precio, this.tipoVacunA);
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
+                        JOptionPane.showMessageDialog(null, "Error");
                     }
                 }
                 
                 break;
                 
                 case MODIFICAR:
-                    if (txtPrecioMotivo != null && cboMotivo.getSelectedItem() != null  && cboTipoVacuna.getSelectedItem() != null) {
+                    if (txtPrecioMotivo != null && cboMotivo.getSelectedItem() != null  && cboTipoVacuna.getSelectedItem() != null ) {
                         boolean examenP = false;
                         if (checkAplicaExamen.isSelected()) {
                             examenP = true;
@@ -195,16 +193,27 @@ public class dlgMantMotivo extends javax.swing.JDialog {
                         String descripcionP = (String)cboMotivo.getSelectedItem();
                         int precioP = Integer.parseInt(txtPrecioMotivo.getText());
                         tipoVacuna vacunaP = (tipoVacuna)cboTipoVacuna.getSelectedItem();
-                        motivo = new Motivo(examenP, descripcionP, precioP, vacunaP);
+                        this.motivo = new Motivo(examenP, descripcionP, precioP, vacunaP);
                     }
                     break;
             }
-            Motivo.agregar(motivo); //Esto lo hace para que en el otro frame ya tenga el nombre de la raza
+            if (motivo != null) {
+                internalMotivo.setMotivo(motivo);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Motivo no valido");
+            }
+            
+            internalMotivo.setMotivo(motivo);
             this.dispose();
-        } catch (Exception ex) {
-            Logger.getLogger(dlgMantMotivo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        // TODO add your handling code here:
+        internalMotivo.setMotivo(null);
+        this.dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
 
   
     public static void main(String args[]) {

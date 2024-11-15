@@ -10,37 +10,54 @@ import javax.swing.JOptionPane;
 
 public class dlgVentanaMantRaza extends javax.swing.JDialog {
     private TipoDeEdicion tipo;
-    private Raza nombreRaza;
+    private Raza razaCreada;
     private String tipoAnimal;
     
     public dlgVentanaMantRaza(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        nombreRaza = new Raza();
+        razaCreada = new Raza();
     }
     
-    public dlgVentanaMantRaza(TipoDeEdicion tipoEdit, String nombreRazaP, String tipoAnimal) {
+    public dlgVentanaMantRaza(TipoDeEdicion tipoEdit, Raza raza) {
         initComponents();
         switch (tipoEdit) {
+            
             case AGREGAR:
                 this.txtNombreRaza.setEnabled(true);
                 this.rdbGato.setEnabled(true);
                 this.rdbPerro.setEnabled(true);
-
+                
                 break;
+                
             case MODIFICAR:
                 this.txtNombreRaza.setEnabled(true);
                 this.rdbGato.setEnabled(false);
                 this.rdbPerro.setEnabled(false);
-                this.nombreRaza.setTipoRaza(tipoAnimal);
-                this.tipoAnimal = tipoAnimal;
-                this.nombreRaza.setDescripcion(nombreRazaP);
+                this.razaCreada = raza;
+                
                 break;
+                
             case CONSULTAR:
                 this.txtNombreRaza.setEnabled(false);
                 this.rdbGato.setEnabled(false);
                 this.rdbPerro.setEnabled(false);
+                if (raza.getTipoRaza().equalsIgnoreCase("Perro")) {
+                    this.rdbPerro.setSelected(true);
+                    this.rdbGato.setSelected(false);
+                    razaCreada.setDescripcion(raza.getDescripcion());
+                    razaCreada.setTipoRaza(raza.getTipoRaza());
+                }
+                else if(raza.getTipoRaza().equalsIgnoreCase("Gato")){
+                    this.rdbGato.setSelected(true);
+                    this.rdbPerro.setSelected(false);
+                    razaCreada.setDescripcion(raza.getDescripcion());
+                    razaCreada.setTipoRaza(raza.getTipoRaza());
+                }
+                this.txtNombreRaza.setText(raza.getDescripcion());
+                lblNumRazasGuardadas.setText(raza.getNumeroRaza()+"");
                 break;
+                
 
         }
         
@@ -70,7 +87,7 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
 
         rdbPerro.setText("Perro");
 
-        jLabel2.setText("#Razas Guardadas");
+        jLabel2.setText("Codigo Raza");
 
         lblNumRazasGuardadas.setText("0");
 
@@ -98,15 +115,6 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblNumRazasGuardadas, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(229, 229, 229))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(195, 195, 195))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -131,6 +139,15 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
                         .addGap(213, 213, 213)
                         .addComponent(jLabel1)))
                 .addContainerGap(96, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblNumRazasGuardadas, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(229, 229, 229))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(211, 211, 211))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,11 +179,19 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
 
     private void btnAceptarRazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarRazaActionPerformed
         // TODO add your handling code here:
- switch (tipo) {
+
+        //Necesito alguna Validacion
+        switch (tipo) {
             case AGREGAR: {
                 try {
-                    if (Raza.consultar(nombreRaza.getTipoRaza()) == null) {
-                         this.nombreRaza = new Raza(nombreRaza.getTipoRaza(),nombreRaza.getDescripcion());
+                    if (Raza.consultar(txtNombreRaza.getText()) == null) {
+                        this.tipoAnimal = "";
+                        if (rdbGato.isSelected()) {
+                            this.tipoAnimal = "Gato";
+                        } else if (rdbPerro.isSelected()) {
+                            this.tipoAnimal = "Perro";
+                        }
+                        this.razaCreada = new Raza(this.tipoAnimal, txtNombreRaza.getText());
                     } else {
                         JOptionPane.showMessageDialog(this,
                                 "Este Tipo de Raza ya existe");
@@ -174,6 +199,7 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
                     }
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
+                    JOptionPane.showMessageDialog(null, "Error");
                 }
             }
 
@@ -181,20 +207,31 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
 
             case MODIFICAR:
                 if (txtNombreRaza != null) {
-                    String nombreraza = txtNombreRaza.getText();
-                    this.nombreRaza = new Raza(this.tipoAnimal, nombreraza);
+                    this.tipoAnimal = "";
+                    if (rdbGato.isSelected()) {
+                        this.tipoAnimal = "Gato";
+                    } else if (rdbPerro.isSelected()) {
+                        this.tipoAnimal = "Perro";
+                    }
+                    String nombreRaza = txtNombreRaza.getText();
+                    this.razaCreada = new Raza(this.tipoAnimal, nombreRaza);
                 }
                 break;
         }
- 
-        mantenimientoRaza.setTipoRaza(nombreRaza); //Esto lo hace para que en el otro frame ya tenga el nombre de la raza
- 
+        if (razaCreada != null) {
+             mantenimientoRaza.setTipoRaza(razaCreada); //Esto lo hace para que en el otro frame ya tenga el nombre de la raza
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No se ha creado una raza válida.");
+        }
+        
+        mantenimientoRaza.setTipoRaza(razaCreada);
         this.dispose();
     }//GEN-LAST:event_btnAceptarRazaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        mantenimientoRaza.getTipoRaza().getDescripcion();
+        mantenimientoRaza.setTipoRaza(null);
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

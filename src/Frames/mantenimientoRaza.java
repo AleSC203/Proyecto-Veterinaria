@@ -25,8 +25,6 @@ public class mantenimientoRaza extends javax.swing.JInternalFrame {
     private static Raza raza;
     private String tipoAnimal ;
     
-    
-    
      public static Raza getTipoRaza() {
         return raza;
     }
@@ -38,10 +36,21 @@ public class mantenimientoRaza extends javax.swing.JInternalFrame {
     public mantenimientoRaza() {
         initComponents();
         listaAnimales.setModel(modeloListaAnimales);
-        tipoAnimal = (String) cboTipoAnimal.getSelectedItem();
-        Raza.cambiarRuta(tipoAnimal);
+       
+        llenarLista();
     }
 
+    private void llenarLista(){
+        //eliminar todas las filas de la tabla
+       modeloListaAnimales.clear();
+        try {
+            for (Raza raza : Raza.listado()) {
+                modeloListaAnimales.addElement(raza);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -122,6 +131,11 @@ public class mantenimientoRaza extends javax.swing.JInternalFrame {
         btnEliminar.setFocusable(false);
         btnEliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnEliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnEliminar);
         jToolBar1.add(jSeparator3);
 
@@ -179,20 +193,20 @@ public class mantenimientoRaza extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         //Variables en uso
-        String nombreRaza = raza.getTipoRaza();
-        dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.AGREGAR, nombreRaza, tipoAnimal);
-
+        
+        dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.AGREGAR, null);
         //Ventana
         obj.setLocationRelativeTo(null);
         obj.setVisible(true);
 
         //objeto
-        Raza nueva = new Raza(nombreRaza,tipoAnimal);
-
-        if (nombreRaza != "") {
+        
+        if (raza != null) {
             try {
-                modeloListaAnimales.addElement(nueva);
-                nueva.agregar(raza);
+//                tipoAnimal = (String) cboTipoAnimal.getSelectedItem();
+                modeloListaAnimales.addElement(raza);
+                Raza.cambiarRuta(raza.getTipoRaza());
+                Raza.agregar(raza);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
@@ -203,14 +217,14 @@ public class mantenimientoRaza extends javax.swing.JInternalFrame {
 
         if (listaAnimales.getSelectedValue() != null) {
 
-            String nombre = listaAnimales.getSelectedValue().getTipoRaza();
+            String nombre = listaAnimales.getSelectedValue().getDescripcion();
             try {
                 raza = Raza.consultar(nombre);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
             if (raza != null) {
-                dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.MODIFICAR, nombre, tipoAnimal);
+                dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.MODIFICAR, raza);
                 obj.setLocationRelativeTo(null);
                 obj.setVisible(true);
 
@@ -219,8 +233,9 @@ public class mantenimientoRaza extends javax.swing.JInternalFrame {
                     Raza.modificar(raza);
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
+                    JOptionPane.showMessageDialog(null, "Error");
                 }
-                //                llenarTabla();  Necesito hacer un metodo que me modifique la lista
+                  llenarLista(); 
             }
         }
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -234,16 +249,33 @@ public class mantenimientoRaza extends javax.swing.JInternalFrame {
                 raza = Raza.consultar(nombre);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Error");
             }
-            dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.CONSULTAR, nombre, tipoAnimal);
+            dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.CONSULTAR, raza);
+            obj.setModal(true);
             obj.setVisible(true);
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
+        
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+      
+        if (listaAnimales.getSelectedIndex() != -1) {
+            int codigo = (Integer)modeloListaAnimales.indexOf(listaAnimales.getSelectedValue());
+            
+             try {
+                 Raza.eliminar(codigo);
+             } catch (Exception ex) {
+                 System.out.println(ex.getMessage());
+                 JOptionPane.showMessageDialog(null, "Error");
+             }
+            llenarLista();
+         }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

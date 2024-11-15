@@ -45,6 +45,7 @@ public class internalMotivo extends javax.swing.JInternalFrame {
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Hubo un error al actualizar la Tabla");
         }
         
     }
@@ -120,6 +121,11 @@ public class internalMotivo extends javax.swing.JInternalFrame {
         btnEliminar.setFocusable(false);
         btnEliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnEliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnEliminar);
         jToolBar1.add(jSeparator3);
 
@@ -195,57 +201,52 @@ public class internalMotivo extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
     
-      
-       
         //Validacion para saber si hay alguna Fila seleccionada
-       
-          try {
-              boolean examen = motivo.getAplicaExamen();
-              String descripcion = motivo.getDescripcion();
-              int precio = motivo.getPrecio();
-              tipoVacuna vacuna = motivo.getVacuna();
-              dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.AGREGAR, descripcion, vacuna, precio, examen);
-              
-              
-              
-              //Ventana
-              obj.setModal(true);
-              obj.toFront();
-              obj.setLocationRelativeTo(null);
-              obj.setVisible(true);
-              
-              //Añadir la fila
-              Object[] filaTabla = new Object[5];
-              filaTabla[0] = examen;
-              filaTabla[1] = this.motivo.getDescripcion();
-              filaTabla[2] = precio;
-              filaTabla[3] = this.motivo.getCodigo();
-              filaTabla[4] = vacuna;
-              modeloTabla.addRow(filaTabla);
-              motivo.agregar(this.motivo);
-              
-          } catch (Exception ex) {
-              System.out.println(ex.getMessage());
-              JOptionPane.showMessageDialog(null, "Error");
-          
+//              boolean examen = motivo.getAplicaExamen();
+//              String descripcion = motivo.getDescripcion();
+//              int precio = motivo.getPrecio();
+//              tipoVacuna vacuna = motivo.getVacuna();
+        dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.AGREGAR, null);
+        obj.setModal(true);
+        obj.setLocationRelativeTo(null);
+        obj.setVisible(true);
+        
+        
+        if (motivo != null) {
+            try {
+                //Añadir la fila
+                Object[] filaTabla = new Object[5];
+                filaTabla[0] = this.motivo.getAplicaExamen();
+                filaTabla[1] = this.motivo.getDescripcion();
+                filaTabla[2] = this.motivo.getPrecio();
+                filaTabla[3] = this.motivo.getCodigo();
+                filaTabla[4] = this.motivo.getVacuna();
+                modeloTabla.addRow(filaTabla);
+                motivo.agregar(this.motivo);
 
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Error");
+
+            }
         }
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-        int fila = tablaMotivo.getSelectedRow();
+     
          //Validacion para saber si hay alguna Fila seleccionada
-        if (fila != -1) {
-            
-              boolean examen = this.motivo.getAplicaExamen();
-              String descripcion = this.motivo.getDescripcion();
-              int precio = this.motivo.getPrecio();
-              tipoVacuna vacuna = this.motivo.getVacuna();
-             
+        if (tablaMotivo.getSelectedRow() != -1) {
+              int codigo = (Integer)modeloTabla.getValueAt(tablaMotivo.getSelectedRow(), 0);             
+             try {
+                this.motivo = Motivo.consultar(codigo);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Hubo un problema en la consulta Del motivo en el boton de modificar");
+            }
             //Verifica si motivo contiene algo 
             if (this.motivo != null) {
-                dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.MODIFICAR, descripcion, vacuna, precio, examen);
+                dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.MODIFICAR, this.motivo);
                 obj.setLocationRelativeTo(null);
                 obj.setVisible(true);
 
@@ -255,27 +256,25 @@ public class internalMotivo extends javax.swing.JInternalFrame {
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
-                //                llenarTabla();  Necesito hacer un metodo que me modifique la lista
+                      actualizarTabla();
             }
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
        
-        int fila = tablaMotivo.getSelectedRow();
+      
          //Validacion para saber si hay alguna Fila seleccionada
-        if (fila != -1) {
-              boolean examen = this.motivo.getAplicaExamen();
-              String descripcion = this.motivo.getDescripcion();
-              int precio = this.motivo.getPrecio();
-              tipoVacuna vacuna = this.motivo.getVacuna();
-              int codigo = motivo.getCodigo();
+        if (tablaMotivo.getSelectedRow() != -1) {
+             int codigo = (Integer)modeloTabla.getValueAt(tablaMotivo.getSelectedRow(), 0);
               try {
-               Motivo.consultar(codigo);
+              this.motivo =  Motivo.consultar(codigo);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Hubo un error con la consulta del motivo en el boton de Consultar");
             }
-            dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.CONSULTAR, descripcion, vacuna, precio, examen);
+            dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.CONSULTAR, this.motivo);
+            obj.setModal(true);
             obj.setVisible(true);
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
@@ -284,6 +283,21 @@ public class internalMotivo extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if (tablaMotivo.getSelectedRow() != -1) {
+            int codigo = (Integer)modeloTabla.getValueAt(tablaMotivo.getSelectedRow(),0);
+            
+             try {
+                 Motivo.eliminar(codigo);
+             } catch (Exception ex) {
+               System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Hubo un error en el borrado del motivo");
+             }
+            actualizarTabla();
+         }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -57,6 +57,9 @@ private int numeroRaza;
     
     
     //BLL
+    public static void cambiarRuta(String animal){
+        RazaDAO.getInstance().setRuta_Archivo(animal);
+    }
     public static void agregar(Raza nombreRaza) throws Exception{
         RazaDAO.getInstance().agregar(nombreRaza);
         JOptionPane.showMessageDialog(null, "Se ha creado con exito");
@@ -75,9 +78,7 @@ private int numeroRaza;
     public static List<Raza> listado() throws Exception{
         return RazaDAO.getInstance().listado();
     }
-    public static void cambiarRuta(String animal){
-        RazaDAO.getInstance().setRuta_Archivo(animal);
-    }
+    
 
 
 
