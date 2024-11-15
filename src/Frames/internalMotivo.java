@@ -7,6 +7,7 @@ import Clases_Cita.TipoMotivo;
 import Clases_Cita.tipoVacuna;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -67,6 +68,7 @@ public class internalMotivo extends javax.swing.JInternalFrame {
         tablaMotivo = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         cboAnimal = new javax.swing.JComboBox<>();
+        btnSalir = new javax.swing.JButton();
 
         btnAgregar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
@@ -143,6 +145,13 @@ public class internalMotivo extends javax.swing.JInternalFrame {
 
         cboAnimal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gato", "Perro" }));
 
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,7 +169,10 @@ public class internalMotivo extends javax.swing.JInternalFrame {
                         .addComponent(cboAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(255, 255, 255)
+                        .addComponent(btnSalir)))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -173,7 +185,9 @@ public class internalMotivo extends javax.swing.JInternalFrame {
                 .addComponent(cboAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(btnSalir)
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -182,19 +196,21 @@ public class internalMotivo extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
     
       
-        int fila = tablaMotivo.getSelectedRow();
+       
         //Validacion para saber si hay alguna Fila seleccionada
-        if (fila != -1) {
+       
           try {
               boolean examen = motivo.getAplicaExamen();
               String descripcion = motivo.getDescripcion();
               int precio = motivo.getPrecio();
               tipoVacuna vacuna = motivo.getVacuna();
               dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.AGREGAR, descripcion, vacuna, precio, examen);
-
+              
               
               
               //Ventana
+              obj.setModal(true);
+              obj.toFront();
               obj.setLocationRelativeTo(null);
               obj.setVisible(true);
               
@@ -210,7 +226,8 @@ public class internalMotivo extends javax.swing.JInternalFrame {
               
           } catch (Exception ex) {
               System.out.println(ex.getMessage());
-          }
+              JOptionPane.showMessageDialog(null, "Error");
+          
 
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -263,12 +280,18 @@ public class internalMotivo extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cboAnimal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

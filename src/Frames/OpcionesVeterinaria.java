@@ -175,7 +175,9 @@ public class OpcionesVeterinaria extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void opcionManMotivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionManMotivoActionPerformed
-
+        internalMotivo obj = new internalMotivo();
+        desktopPane.add(obj);
+        obj.setVisible(true);
     }//GEN-LAST:event_opcionManMotivoActionPerformed
 
     private void opcionListPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionListPacientesActionPerformed
@@ -185,7 +187,8 @@ public class OpcionesVeterinaria extends javax.swing.JFrame {
     }//GEN-LAST:event_opcionListPacientesActionPerformed
 
     private void opcionManEspeciesyRazasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionManEspeciesyRazasActionPerformed
-        MantenimientoRazas obj = new MantenimientoRazas();
+        mantenimientoRaza obj = new mantenimientoRaza();
+        desktopPane.add(obj);
         obj.setVisible(true);
         
     }//GEN-LAST:event_opcionManEspeciesyRazasActionPerformed

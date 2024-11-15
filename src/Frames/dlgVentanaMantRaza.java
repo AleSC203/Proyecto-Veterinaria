@@ -140,11 +140,12 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombreRaza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rdbGato)
-                    .addComponent(rdbPerro)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rdbGato)
+                        .addComponent(rdbPerro)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptarRaza)
@@ -186,14 +187,14 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
                 break;
         }
  
-        MantenimientoRazas.setTipoRaza(nombreRaza); //Esto lo hace para que en el otro frame ya tenga el nombre de la raza
+        mantenimientoRaza.setTipoRaza(nombreRaza); //Esto lo hace para que en el otro frame ya tenga el nombre de la raza
  
         this.dispose();
     }//GEN-LAST:event_btnAceptarRazaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        MantenimientoRazas.getTipoRaza().getDescripcion();
+        mantenimientoRaza.getTipoRaza().getDescripcion();
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
