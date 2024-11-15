@@ -10,12 +10,12 @@ import java.util.List;
 public class Motivo {
     private boolean aplicaExamen;
     private String descripcion; 
-    private double precio;
+    private int precio;
     private int codigo;
     private static int codigoContador = 0;
     private tipoVacuna vacuna;
 
-    public Motivo(boolean aplicaExamen, String descripcion, double precio, tipoVacuna vacunaP) {
+    public Motivo(boolean aplicaExamen, String descripcion, int precio, tipoVacuna vacunaP) {
         this.aplicaExamen = aplicaExamen;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -24,13 +24,14 @@ public class Motivo {
         
     }
 
-    public boolean isAplicaExamen() {
+    public boolean getAplicaExamen() {
         return aplicaExamen;
     }
 
     public void setAplicaExamen(boolean aplicaExamen) {
         this.aplicaExamen = aplicaExamen;
     }
+    
 
     public String getDescripcion() {
         return descripcion;
@@ -40,11 +41,11 @@ public class Motivo {
         this.descripcion = descripcion;
     }
 
-    public double getPrecio() {
+    public int getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(int precio) {
         this.precio = precio;
     }
 

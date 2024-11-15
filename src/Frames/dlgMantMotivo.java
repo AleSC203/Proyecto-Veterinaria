@@ -1,6 +1,7 @@
 
 package Frames;
 
+import Clases_Cita.Motivo;
 import Clases_Cita.TipoMotivo;
 import Clases_Cita.tipoVacuna;
 import static Frames.TipoDeEdicion.AGREGAR;
@@ -9,8 +10,8 @@ import static Frames.TipoDeEdicion.MODIFICAR;
 
 
 public class dlgMantMotivo extends javax.swing.JDialog {
-    private TipoMotivo tipoMotivo;
     private tipoVacuna tipoVacunA;
+    private String descripcion;
     private int precio;
     private boolean examen;
    
@@ -20,7 +21,7 @@ public class dlgMantMotivo extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-    public dlgMantMotivo(TipoDeEdicion tipoEdit, TipoMotivo nombreMotivoP, tipoVacuna nombreVacunaP, int precioP, boolean examen){
+    public dlgMantMotivo(TipoDeEdicion tipoEdit,String descripcionP, tipoVacuna nombreVacunaP, int precioP, boolean examen){
         initComponents();
          switch(tipoEdit){
            case AGREGAR:
@@ -36,9 +37,11 @@ public class dlgMantMotivo extends javax.swing.JDialog {
                this.cboTipoVacuna.setEnabled(true);
                this.checkAplicaExamen.setEnabled(true);
                
-               this.tipoMotivo = nombreMotivoP;
+               
                this.tipoVacunA = nombreVacunaP;
                this.precio = precioP;
+               this.examen = examen;
+             
                break;
                
            case CONSULTAR:
@@ -48,20 +51,21 @@ public class dlgMantMotivo extends javax.swing.JDialog {
                checkAplicaExamen.setEnabled(false);
                
                txtPrecioMotivo.setText(precioP + "");
-               cboMotivo.setSelectedItem(this.tipoMotivo.getDescripcion());
+               cboMotivo.setSelectedItem(descripcionP);
                cboTipoVacuna.setSelectedItem(this.tipoVacunA.getDescripcion());
                checkAplicaExamen.setSelected(examen);
                break;
           
        }
-        if (nombreMotivoP != null || nombreVacunaP != null || precioP != 0 ) {
-           this.tipoMotivo = nombreMotivoP;
+        if (descripcionP != null || nombreVacunaP != null || precioP != 0 ) {
+           this.descripcion = descripcionP;
            this.tipoVacunA = nombreVacunaP;
            this.precio = precioP;
+           this.examen = examen;
         }
        this.edit = tipoEdit;
-       internalMotivo.setTipoMotivo(this.tipoMotivo.getDescripcion());
-       internalMotivo.setCostoMotivo(Integer.parseInt(txtPrecioMotivo.getText()));
+       Motivo motivo = new Motivo(this.examen, this.descripcion, this.precio, this.tipoVacunA);
+       internalMotivo.setMotivo(motivo);
        
     }
 
@@ -83,6 +87,8 @@ public class dlgMantMotivo extends javax.swing.JDialog {
         jLabel1.setText("Descripcion ");
 
         jLabel2.setText("Precio");
+
+        cboMotivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vacunación", "Desparacitación", "Chqueo General", "Enfermedad", "Cirugía" }));
 
         checkAplicaExamen.setText("Aplicacion De examen");
 
@@ -113,13 +119,9 @@ public class dlgMantMotivo extends javax.swing.JDialog {
                                 .addGap(8, 8, 8)
                                 .addComponent(checkAplicaExamen))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(38, 38, 38)
-                                        .addComponent(jLabel2)
-                                        .addGap(58, 58, 58))
-                                    .addComponent(txtPrecioMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(38, 38, 38)
+                                .addComponent(jLabel2))
+                            .addComponent(txtPrecioMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -188,7 +190,7 @@ public class dlgMantMotivo extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<TipoMotivo> cboMotivo;
+    private javax.swing.JComboBox<String> cboMotivo;
     private javax.swing.JComboBox<tipoVacuna> cboTipoVacuna;
     private javax.swing.JCheckBox checkAplicaExamen;
     private javax.swing.JLabel jLabel1;

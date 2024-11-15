@@ -12,27 +12,18 @@ import javax.swing.table.DefaultTableModel;
 
 public class internalMotivo extends javax.swing.JInternalFrame {
     private DefaultTableModel modeloTabla = new DefaultTableModel();
-    private static String nombreMotivo;
-    private static int costoMotivo;
-    Motivo motivo;
+    private static Motivo motivo;
     
-    public static String getTipoRaza() {
-        return nombreMotivo;
+    public static Motivo getMotivo() {
+        return motivo;
     }
 
-    public static void setTipoMotivo(String motivo) {
-        nombreMotivo = motivo;
-    }
-
-    public static int getCostoMotivo() {
-        return costoMotivo;
-    }
-
-    public static void setCostoMotivo(int costoMotivo) {
-        internalMotivo.costoMotivo = costoMotivo;
+    public static void setMotivo(Motivo motivo) {
+        motivo = motivo;
     }
     
     
+    //Constructor
     public internalMotivo() {
         initComponents();
         modeloTabla = (DefaultTableModel)tablaMotivo.getModel();
@@ -44,7 +35,7 @@ public class internalMotivo extends javax.swing.JInternalFrame {
         try {
             for (Motivo motivoP : Motivo.listado()) {
               Object[] filaTabla = new Object[5];
-              filaTabla[0] = motivoP.isAplicaExamen();
+              filaTabla[0] = motivoP.getAplicaExamen();
               filaTabla[1] = motivoP.getDescripcion();
               filaTabla[2] = motivoP.getPrecio();
               filaTabla[3] = motivoP.getCodigo();
@@ -189,24 +180,25 @@ public class internalMotivo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-      //  Variables en uso
+    
       
-      int fila = tablaMotivo.getSelectedRow();
+        int fila = tablaMotivo.getSelectedRow();
+        //Validacion para saber si hay alguna Fila seleccionada
         if (fila != -1) {
           try {
-              boolean examen = (boolean)tablaMotivo.getValueAt(fila, 0);
-              TipoMotivo Descripcion = (TipoMotivo)tablaMotivo.getValueAt(fila, 1);
-              int precio = (Integer)tablaMotivo.getValueAt(fila, 2);
-              int codigo = (Integer)tablaMotivo.getValueAt(fila, 3);
-              tipoVacuna vacuna = (tipoVacuna)tablaMotivo.getValueAt(fila, 4);
-              dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.AGREGAR, Descripcion, vacuna, precio, examen);
-               this.motivo = new Motivo(examen, nombreMotivo, precio,vacuna);
+              boolean examen = motivo.getAplicaExamen();
+              String descripcion = motivo.getDescripcion();
+              int precio = motivo.getPrecio();
+              tipoVacuna vacuna = motivo.getVacuna();
+              dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.AGREGAR, descripcion, vacuna, precio, examen);
+
               
               
               //Ventana
               obj.setLocationRelativeTo(null);
               obj.setVisible(true);
               
+              //Añadir la fila
               Object[] filaTabla = new Object[5];
               filaTabla[0] = examen;
               filaTabla[1] = this.motivo.getDescripcion();
@@ -215,8 +207,9 @@ public class internalMotivo extends javax.swing.JInternalFrame {
               filaTabla[4] = vacuna;
               modeloTabla.addRow(filaTabla);
               motivo.agregar(this.motivo);
+              
           } catch (Exception ex) {
-              Logger.getLogger(internalMotivo.class.getName()).log(Level.SEVERE, null, ex);
+              System.out.println(ex.getMessage());
           }
 
         }
@@ -224,43 +217,50 @@ public class internalMotivo extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-//        if (listaAnimales.getSelectedValue() != null) {
-//
-//            String nombre = listaAnimales.getSelectedValue().getTipoRaza();
-//            try {
-//                raza = Raza.consultar(nombre);
-//            } catch (Exception ex) {
-//                System.out.println(ex.getMessage());
-//            }
-//            if (raza != null) {
-//                dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.MODIFICAR, nombre, tipoAnimal);
-//                obj.setLocationRelativeTo(null);
-//                obj.setVisible(true);
-//
-//                //Los modifica en el archivo
-//                try {
-//                    Raza.modificar(raza);
-//                } catch (Exception ex) {
-//                    System.out.println(ex.getMessage());
-//                }
-//                //                llenarTabla();  Necesito hacer un metodo que me modifique la lista
-//            }
-//        }
+        int fila = tablaMotivo.getSelectedRow();
+         //Validacion para saber si hay alguna Fila seleccionada
+        if (fila != -1) {
+            
+              boolean examen = this.motivo.getAplicaExamen();
+              String descripcion = this.motivo.getDescripcion();
+              int precio = this.motivo.getPrecio();
+              tipoVacuna vacuna = this.motivo.getVacuna();
+             
+            //Verifica si motivo contiene algo 
+            if (this.motivo != null) {
+                dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.MODIFICAR, descripcion, vacuna, precio, examen);
+                obj.setLocationRelativeTo(null);
+                obj.setVisible(true);
+
+                //Los modifica en el archivo
+                try {
+                    Motivo.modificar(this.motivo);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+                //                llenarTabla();  Necesito hacer un metodo que me modifique la lista
+            }
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        // TODO add your handling code here:
-
-//        if (listaAnimales.getSelectedValue() != null) {
-//            String nombre = listaAnimales.getSelectedValue().getTipoRaza();
-//            try {
-//                raza = Raza.consultar(nombre);
-//            } catch (Exception ex) {
-//                System.out.println(ex.getMessage());
-//            }
-//            dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.CONSULTAR, nombre, tipoAnimal);
-//            obj.setVisible(true);
-//        }
+       
+        int fila = tablaMotivo.getSelectedRow();
+         //Validacion para saber si hay alguna Fila seleccionada
+        if (fila != -1) {
+              boolean examen = this.motivo.getAplicaExamen();
+              String descripcion = this.motivo.getDescripcion();
+              int precio = this.motivo.getPrecio();
+              tipoVacuna vacuna = this.motivo.getVacuna();
+              int codigo = motivo.getCodigo();
+              try {
+               Motivo.consultar(codigo);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+            dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.CONSULTAR, descripcion, vacuna, precio, examen);
+            obj.setVisible(true);
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
 
