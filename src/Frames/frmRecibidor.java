@@ -22,6 +22,8 @@ public class frmRecibidor extends javax.swing.JFrame {
         initComponents();
         Usuario = new HashMap<>();
         llenarUsuarios();
+        txtUsuario.setText("admin");
+        txtContraseña.setText("123456");
 
     }
 

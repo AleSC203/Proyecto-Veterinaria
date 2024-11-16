@@ -65,11 +65,11 @@ public class internalMotivo extends javax.swing.JInternalFrame {
         jSeparator2 = new javax.swing.JToolBar.Separator();
         btnEliminar = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
+        btnSalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaMotivo = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         cboAnimal = new javax.swing.JComboBox<>();
-        btnSalir = new javax.swing.JButton();
 
         btnAgregar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,6 +129,20 @@ public class internalMotivo extends javax.swing.JInternalFrame {
         jToolBar1.add(btnEliminar);
         jToolBar1.add(jSeparator3);
 
+        btnSalir.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salida.png"))); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.setFocusable(false);
+        btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnSalir);
+
         tablaMotivo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -151,22 +165,12 @@ public class internalMotivo extends javax.swing.JInternalFrame {
 
         cboAnimal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gato", "Perro" }));
 
-        btnSalir.setText("Salir");
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(260, 260, 260)
                         .addComponent(jLabel1))
@@ -177,8 +181,8 @@ public class internalMotivo extends javax.swing.JInternalFrame {
                         .addGap(34, 34, 34)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(255, 255, 255)
-                        .addComponent(btnSalir)))
+                        .addGap(86, 86, 86)
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -191,22 +195,15 @@ public class internalMotivo extends javax.swing.JInternalFrame {
                 .addComponent(cboAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(btnSalir)
-                .addGap(26, 26, 26))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-    
-        //Validacion para saber si hay alguna Fila seleccionada
-//              boolean examen = motivo.getAplicaExamen();
-//              String descripcion = motivo.getDescripcion();
-//              int precio = motivo.getPrecio();
-//              tipoVacuna vacuna = motivo.getVacuna();
-        dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.AGREGAR, null);
+        String animal = (String) cboAnimal.getSelectedItem();
+        dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.AGREGAR, null,animal);
         obj.setModal(true);
         obj.setLocationRelativeTo(null);
         obj.setVisible(true);
@@ -223,7 +220,8 @@ public class internalMotivo extends javax.swing.JInternalFrame {
                 filaTabla[4] = this.motivo.getVacuna();
                 modeloTabla.addRow(filaTabla);
                 motivo.agregar(this.motivo);
-
+               
+                
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 JOptionPane.showMessageDialog(null, "Error");
@@ -238,6 +236,7 @@ public class internalMotivo extends javax.swing.JInternalFrame {
      
          //Validacion para saber si hay alguna Fila seleccionada
         if (tablaMotivo.getSelectedRow() != -1) {
+             
               int codigo = (Integer)modeloTabla.getValueAt(tablaMotivo.getSelectedRow(), 0);             
              try {
                 this.motivo = Motivo.consultar(codigo);
@@ -246,7 +245,8 @@ public class internalMotivo extends javax.swing.JInternalFrame {
             }
             //Verifica si motivo contiene algo 
             if (this.motivo != null) {
-                dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.MODIFICAR, this.motivo);
+                String animal = (String) cboAnimal.getSelectedItem();
+                dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.MODIFICAR, this.motivo,animal);
                 obj.setLocationRelativeTo(null);
                 obj.setVisible(true);
 
@@ -273,16 +273,12 @@ public class internalMotivo extends javax.swing.JInternalFrame {
                 System.out.println(ex.getMessage());
                 JOptionPane.showMessageDialog(null, "Hubo un error con la consulta del motivo en el boton de Consultar");
             }
-            dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.CONSULTAR, this.motivo);
+            String animal = (String) cboAnimal.getSelectedItem();
+            dlgMantMotivo obj = new dlgMantMotivo(TipoDeEdicion.CONSULTAR, this.motivo,animal);
             obj.setModal(true);
             obj.setVisible(true);
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
-
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
@@ -298,6 +294,10 @@ public class internalMotivo extends javax.swing.JInternalFrame {
             actualizarTabla();
          }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

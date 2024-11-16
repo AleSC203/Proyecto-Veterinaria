@@ -3,16 +3,16 @@ package Clases_Cita;
 
 
 public enum tipoVacuna {
-   TRIPLE_PERRO("Perro","Triple",4670),
-   PARVOVIRUS_PERRO("Perro","Parvovirus",6500),
-   REFUERZOTRIPLE_PERRO("Perro","Refuerzo Triple",4670),
-   REFUERZO_RABIA_PERRO("Perro","Refuerzo Rabia",6500),
-   RABIA_PERRO("Perro","Rabia",8765),
-   TRIVALENTE_GATO("Gato","Trivalente", 5500),
-   REFUERZO_TRIVALENTE_GATO("Gato","Refuerzo Trivalente",5500),
-   RABIA_GATO("Gato","Rabia Gato",9000),
-   LEUCEMIAFELINA_GATO("Gato","Leucemia Felina",4567),
-   REFUERZO_LEUCEMIA_FELINA("Gato","Refuerzo Leucemia",4567);
+   Triple_Perro("Perro","Triple",4670),
+   Parvovirus_Perro("Perro","Parvovirus",6500),
+   Refuerzo_Triple_Perro("Perro","Refuerzo Triple",4670),
+   Refuerzo_Rabia_Perro("Perro","Refuerzo Rabia",6500),
+   Rabia_Perro("Perro","Rabia",8765),
+   Trivalente_Gato("Gato","Trivalente", 5500),
+   Refuerzo_Trivalente_Gato("Gato","Refuerzo Trivalente",5500),
+   Rabia_Gato("Gato","Rabia Gato",9000),
+   Leucemia_Gato("Gato","Leucemia Felina",4567),
+   Refuerzo_Leucemia_Felina_Gato("Gato","Refuerzo Leucemia",4567);
    
    String animal;
    String descripcion;
@@ -21,6 +21,7 @@ public enum tipoVacuna {
     private tipoVacuna(String animal,String descripcion, int costo) {
         this.descripcion = descripcion;
         this.costo = costo;
+        this.animal = animal;
     }
 
     public String getDescripcion() {

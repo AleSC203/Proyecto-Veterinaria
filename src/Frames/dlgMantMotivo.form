@@ -115,12 +115,15 @@
           <StringArray count="5">
             <StringItem index="0" value="Vacunaci&#xf3;n"/>
             <StringItem index="1" value="Desparacitaci&#xf3;n"/>
-            <StringItem index="2" value="Chqueo General"/>
+            <StringItem index="2" value="Chequeo General"/>
             <StringItem index="3" value="Enfermedad"/>
             <StringItem index="4" value="Cirug&#xed;a"/>
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboMotivoActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -128,6 +131,7 @@
     <Component class="javax.swing.JCheckBox" name="checkAplicaExamen">
       <Properties>
         <Property name="text" type="java.lang.String" value="Aplicacion De examen"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPrecioMotivo">
@@ -143,6 +147,9 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboTipoVacunaActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;tipoVacuna&gt;"/>
       </AuxValues>

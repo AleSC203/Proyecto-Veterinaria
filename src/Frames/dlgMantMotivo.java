@@ -21,26 +21,35 @@ public class dlgMantMotivo extends javax.swing.JDialog {
     private TipoDeEdicion edit;
     private Motivo motivo;
     
+    private  String animal;
+    
+    
+    
     public dlgMantMotivo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+       
     }
-    public dlgMantMotivo(TipoDeEdicion tipoEdit,Motivo motivoP){
+    public dlgMantMotivo(TipoDeEdicion tipoEdit,Motivo motivoP ,String animalP){
         initComponents();
+        llenarComboVacunas();
+        cboTipoVacuna.setSelectedIndex(-1);
+         
          switch(tipoEdit){
            case AGREGAR:
                txtPrecioMotivo.setEnabled(true);
                cboMotivo.setEnabled(true);
                cboTipoVacuna.setEnabled(true);
-               checkAplicaExamen.setEnabled(true);
+               this.animal = animalP;
+               
                break;
                
            case MODIFICAR:
                this.txtPrecioMotivo.setEnabled(true);
                this.cboMotivo.setEnabled(true);
                this.cboTipoVacuna.setEnabled(true);
-               this.checkAplicaExamen.setEnabled(true);
                this.motivo = motivoP;
+               this.animal = animalP;
              
                break;
                
@@ -48,12 +57,12 @@ public class dlgMantMotivo extends javax.swing.JDialog {
                txtPrecioMotivo.setEnabled(false);
                cboMotivo.setEnabled(false);
                cboTipoVacuna.setEnabled(false);
-               checkAplicaExamen.setEnabled(false);
+               
                
                txtPrecioMotivo.setText(motivoP.getPrecio() + "");
                cboMotivo.setSelectedItem(motivoP.getDescripcion());
                cboTipoVacuna.setSelectedItem(motivoP.getVacuna());
-               checkAplicaExamen.setSelected(examen);
+               this.animal = animalP;
                break;
           
        }
@@ -61,6 +70,18 @@ public class dlgMantMotivo extends javax.swing.JDialog {
        this.edit = tipoEdit;
       
        
+    }
+    
+    public void llenarComboVacunas(){
+       try {
+        for (tipoVacuna vacuna : tipoVacuna.values()) {
+            cboTipoVacuna.addItem(vacuna);
+        }
+    } catch (NullPointerException e) {
+        System.err.println("Error al llenar el combo box: " + e.getMessage());
+    } catch (Exception e) {
+        System.err.println("Error inesperado: " + e.getMessage());
+    }
     }
 
    
@@ -84,11 +105,23 @@ public class dlgMantMotivo extends javax.swing.JDialog {
 
         jLabel2.setText("Precio");
 
-        cboMotivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vacunación", "Desparacitación", "Chqueo General", "Enfermedad", "Cirugía" }));
+        cboMotivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vacunación", "Desparacitación", "Chequeo General", "Enfermedad", "Cirugía" }));
+        cboMotivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboMotivoActionPerformed(evt);
+            }
+        });
 
         checkAplicaExamen.setText("Aplicacion De examen");
+        checkAplicaExamen.setEnabled(false);
 
         jLabel3.setText("Tipo Vacuna");
+
+        cboTipoVacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTipoVacunaActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -169,44 +202,63 @@ public class dlgMantMotivo extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
        
-            // TODO add your handling code here:
-            
-            switch (this.edit) {
-                case AGREGAR: {
-                    try {
-                        //Necesito Validacion de si ya esta creado o no aunque creo que no se puede repetir
-                        this.motivo = new Motivo(this.examen, this.descripcion, this.precio, this.tipoVacunA);
-                    } catch (Exception ex) {
-                        System.out.println(ex.getMessage());
-                        JOptionPane.showMessageDialog(null, "Error");
-                    }
+        // TODO add your handling code here:
+        switch (this.edit) {
+            case AGREGAR: {
+                try {
+                    //Necesito Validacion de si ya esta creado o no aunque creo que no se puede repetir
+                    this.motivo = new Motivo(this.examen, this.descripcion, this.precio, this.tipoVacunA);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                    JOptionPane.showMessageDialog(null, "Error");
                 }
-                
-                break;
-                
-                case MODIFICAR:
-                    if (txtPrecioMotivo != null && cboMotivo.getSelectedItem() != null  && cboTipoVacuna.getSelectedItem() != null ) {
-                        boolean examenP = false;
-                        if (checkAplicaExamen.isSelected()) {
-                            examenP = true;
-                        }
-                        String descripcionP = (String)cboMotivo.getSelectedItem();
-                        int precioP = Integer.parseInt(txtPrecioMotivo.getText());
-                        tipoVacuna vacunaP = (tipoVacuna)cboTipoVacuna.getSelectedItem();
-                        this.motivo = new Motivo(examenP, descripcionP, precioP, vacunaP);
-                    }
-                    break;
             }
-            if (motivo != null) {
-                internalMotivo.setMotivo(motivo);
+
+            break;
+
+            case MODIFICAR:
+                if (txtPrecioMotivo != null && cboMotivo.getSelectedItem() != null && cboTipoVacuna.getSelectedItem() != null) {
+                    boolean examenP = false;
+                    if (checkAplicaExamen.isSelected()) {
+                        examenP = true;
+                    }
+                    String descripcionP = (String) cboMotivo.getSelectedItem();
+                    int precioP = Integer.parseInt(txtPrecioMotivo.getText());
+                    tipoVacuna vacunaP = (tipoVacuna) cboTipoVacuna.getSelectedItem();
+                    this.motivo = new Motivo(examenP, descripcionP, precioP, vacunaP);
+                }
+                break;
+        }
+        if (motivo != null) {
+            internalMotivo.setMotivo(motivo);
+        } else {
+            JOptionPane.showMessageDialog(null, "Motivo no valido");
+        }
+
+        internalMotivo.setMotivo(motivo);
+        
+
+        if (animal.equalsIgnoreCase("Gato")) {
+            tipoVacuna tipoVacuna = (tipoVacuna)cboTipoVacuna.getSelectedItem();
+            if (tipoVacuna.getAnimal().equalsIgnoreCase("Perro")) {
+                JOptionPane.showMessageDialog(null, "No puedes elegir esta opción ya que es una vacuna para perros y tu mascota es un gatito");
+                cboTipoVacuna.setSelectedIndex(-1);
             }
             else{
-                JOptionPane.showMessageDialog(null, "Motivo no valido");
+                this.dispose();
             }
-            
-            internalMotivo.setMotivo(motivo);
-            this.dispose();
-       
+        } else if (animal.equalsIgnoreCase("Perro")) {
+             tipoVacuna tipoVacuna = (tipoVacuna)cboTipoVacuna.getSelectedItem();
+            if (tipoVacuna.getAnimal().equalsIgnoreCase("Gato")) {
+                JOptionPane.showMessageDialog(null, "No puedes elegir esta opción ya que es una vacuna para Gatos y tu mascota es un perrito");
+                cboTipoVacuna.setSelectedIndex(-1);
+            }
+            else{
+                this.dispose();
+            }
+        }
+      
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -214,6 +266,39 @@ public class dlgMantMotivo extends javax.swing.JDialog {
         internalMotivo.setMotivo(null);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void cboMotivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMotivoActionPerformed
+        // TODO add your handling code here:
+        String motivoo = (String)cboMotivo.getSelectedItem();
+        if (motivoo.equalsIgnoreCase("Desparacitación")) {
+            txtPrecioMotivo.setText(2000+"");
+             checkAplicaExamen.setSelected(false);
+        }
+        else if (motivoo.equalsIgnoreCase("Chequeo General")) {
+            txtPrecioMotivo.setText(8000+"");
+            checkAplicaExamen.setSelected(true);
+        }
+        else if (motivoo.equalsIgnoreCase("Enfermedad")) {
+            txtPrecioMotivo.setText("");
+            checkAplicaExamen.setSelected(true);
+        }
+        else if (motivoo.equalsIgnoreCase("Cirugía")) {
+             txtPrecioMotivo.setText("");
+            checkAplicaExamen.setSelected(true);
+        }
+        else if (motivoo.equalsIgnoreCase("Vacunación")) {
+             txtPrecioMotivo.setText("");
+            checkAplicaExamen.setSelected(false);
+        }
+        
+        
+    }//GEN-LAST:event_cboMotivoActionPerformed
+
+    private void cboTipoVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoVacunaActionPerformed
+        // TODO add your handling code here:
+        
+       
+    }//GEN-LAST:event_cboTipoVacunaActionPerformed
 
   
     public static void main(String args[]) {
