@@ -3,23 +3,23 @@ package HijasPruebasLaboratorio;
 
 public class Sangre extends Clases_Cita.PruebaLaboratorio {
 
-    private String descripcion;
+    private String nombrePrueba;//Contendra el nonbre de la subClase
     private double costo;
 
-    public Sangre(String descripcionP, double precioExamen) {
-        super(descripcionP, precioExamen);
-        this.descripcion = descripcionP;
+    public Sangre(String nombrePruebaP, double precioExamen) {
+        super(nombrePruebaP, precioExamen);
+        this.nombrePrueba = nombrePruebaP;
         this.costo = precioExamen;
     }
 
     @Override
     public String getDescripcion() {
-        return this.descripcion;
+        return this.nombrePrueba;
     }
 
     @Override
     public void setDescripcion(String descripcionP) {
-        this.descripcion = descripcionP;
+        this.nombrePrueba = descripcionP;
     }
 
     @Override

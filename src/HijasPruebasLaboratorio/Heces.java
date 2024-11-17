@@ -2,23 +2,23 @@ package HijasPruebasLaboratorio;
 
 public class Heces extends Clases_Cita.PruebaLaboratorio {
 
-    private String Descripcion;
+    private String nombrePrueba; //Este contendra el nombre de la subClase
     private double costo;
 
-    public Heces(String Descripcion, String descripcion, double precioExamen) {
+    public Heces(String nombrePruebaP, String descripcion, double precioExamen) {
         super(descripcion, precioExamen);
-        this.Descripcion = Descripcion;
+        this.nombrePrueba = nombrePruebaP;
         this.costo = precioExamen;
     }
 
     @Override
     public String getDescripcion() {
-        return this.Descripcion;
+        return this.nombrePrueba;
     }
 
     @Override
     public void setDescripcion(String descripcion) {
-        this.Descripcion = descripcion;
+        this.nombrePrueba = descripcion;
     }
 
     @Override

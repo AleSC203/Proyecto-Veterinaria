@@ -4,6 +4,12 @@
  */
 package Frames;
 
+import Clases_Cita.PruebaLaboratorio;
+import Clases_Cita.Vacunas;
+import static Frames.TipoDeEdicion.AGREGAR;
+import static Frames.TipoDeEdicion.CONSULTAR;
+import static Frames.TipoDeEdicion.MODIFICAR;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,14 +17,50 @@ import javax.swing.JOptionPane;
  * @author Usuario
  */
 public class dlgMantPruebaLab extends javax.swing.JDialog {
-
-    /**
-     * Creates new form dlgMantPruebaLab
-     */
+    private TipoDeEdicion tipo;
+    private PruebaLaboratorio pruebaLab;
+    private ArrayList<PruebaLaboratorio> arrayPruebas;
+   
     public dlgMantPruebaLab(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         limpiarTodo();
+        arrayPruebas = new ArrayList<>();
+    }
+    
+    public dlgMantPruebaLab(TipoDeEdicion edit, PruebaLaboratorio pruebaLabP){
+        
+         switch (edit) {
+            
+            case AGREGAR:
+                this.cboTipoPruebasLab.setEnabled(true);
+                break;
+                
+            case MODIFICAR:
+               this.cboTipoPruebasLab.setEnabled(true);
+               this.pruebaLab = pruebaLabP;
+              
+                
+                break;
+                
+            case CONSULTAR:
+                this.cboTipoPruebasLab.setEnabled(false);
+                this.btnGuardar.setEnabled(false);
+                this.btnLimpiar.setEnabled(false);
+                this.cboTipoPruebasLab.setSelectedIndex(-1);
+                
+                //Debo pensar como hacer un arrayList Bien hecho
+                this.txtCostoVacuna.setEnabled(false);
+               this.txtTipoVacuna.setEnabled(false);
+               this.cboAnimalVacuna.setEditable(false);
+                this.txtCostoVacuna.setText(vacunaP.getCosto() + "");
+               this.txtTipoVacuna.setText(vacunaP.getNombreVacuna() + "");
+               this.cboAnimalVacuna.setSelectedItem(vacunaP.getAnimalPertenece());
+               this.lblCodigoVacuna.setText(vacunaP.getCodigo() + "");
+                break;
+                
+
+        }
     }
     
     public void limpiarTodo(){
@@ -574,6 +616,12 @@ public class dlgMantPruebaLab extends javax.swing.JDialog {
 
         if (respuesta == JOptionPane.YES_OPTION) {
             // Aquí va el código para realizar las acciones de guardar
+            
+            
+        if (obj != null) {
+            this.arrayPruebas.add(obj);
+        
+    }
 
         } else {
             // Si el usuario selecciona "No", no se hace nada

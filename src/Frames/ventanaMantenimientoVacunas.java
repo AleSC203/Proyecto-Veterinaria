@@ -164,7 +164,7 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(150, 150, 150))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(329, 329, 329)
+                .addGap(343, 343, 343)
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -184,24 +184,27 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        //Variables en uso
-        
-        dlgMantenimientoVacuna obj = new dlgMantenimientoVacuna(TipoDeEdicion.AGREGAR, null);
-        //Ventana
-        obj.setLocationRelativeTo(null);
-        obj.setVisible(true);
-
-        //objeto
-        
-        if (vacuna != null) {
-            try {
-                modeloListaVacunas.addElement(vacuna);
-                Vacunas.agregar(vacuna);
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-                JOptionPane.showMessageDialog(null, "No se ha logrado agragar la vacuna");
-            }
-        }
+         try {
+             //Variables en uso
+             
+             dlgMantenimientoVacuna obj = new dlgMantenimientoVacuna(TipoDeEdicion.AGREGAR, null);
+             //Ventana
+             obj.setLocationRelativeTo(null);
+             obj.setVisible(true);
+             
+             //objeto
+             
+             if (vacuna != null) {
+                 try {
+                     modeloListaVacunas.addElement(vacuna);
+                     Vacunas.agregar(vacuna);
+                 } catch (Exception ex) {
+                     System.out.println(ex.getMessage());
+                     JOptionPane.showMessageDialog(null, "No se ha logrado agragar la vacuna");
+                 }
+             }} catch (Exception ex) {
+             Logger.getLogger(ventanaMantenimientoVacunas.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -216,18 +219,22 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Error en la busqueda de la vacuna");
             }
             if (vacuna != null) {
-                dlgMantenimientoVacuna obj = new dlgMantenimientoVacuna(TipoDeEdicion.MODIFICAR, vacuna);
-                obj.setLocationRelativeTo(null);
-                obj.setVisible(true);
-
-                //Los modifica en el archivo
                 try {
-                    Vacunas.modificar(vacuna);
+                    dlgMantenimientoVacuna obj = new dlgMantenimientoVacuna(TipoDeEdicion.MODIFICAR, vacuna);
+                    obj.setLocationRelativeTo(null);
+                    obj.setVisible(true);
+                    
+                    //Los modifica en el archivo
+                    try {
+                        Vacunas.modificar(vacuna);
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
+                        JOptionPane.showMessageDialog(null, "Error en la actualización de la Vacuna");
+                    }
+                    llenarLista();
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                    JOptionPane.showMessageDialog(null, "Error en la actualización de la Vacuna");
+                    Logger.getLogger(ventanaMantenimientoVacunas.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                  llenarLista(); 
             }
         }
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -236,16 +243,20 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
 
         if (listaVacunas.getSelectedValue() != null) {
-            String nombreVacuna = listaVacunas.getSelectedValue().getNombreVacuna();
             try {
-                vacuna = Vacunas.consultar(nombreVacuna);
+                String nombreVacuna = listaVacunas.getSelectedValue().getNombreVacuna();
+                try {
+                    vacuna = Vacunas.consultar(nombreVacuna);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                    JOptionPane.showMessageDialog(null, "Error");
+                }
+                dlgMantenimientoVacuna obj = new dlgMantenimientoVacuna(TipoDeEdicion.CONSULTAR, vacuna);
+                obj.setModal(true);
+                obj.setVisible(true);
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-                JOptionPane.showMessageDialog(null, "Error");
+                Logger.getLogger(ventanaMantenimientoVacunas.class.getName()).log(Level.SEVERE, null, ex);
             }
-            dlgMantenimientoVacuna obj = new dlgMantenimientoVacuna(TipoDeEdicion.CONSULTAR, vacuna);
-            obj.setModal(true);
-            obj.setVisible(true);
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
 

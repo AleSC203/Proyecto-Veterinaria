@@ -5,12 +5,12 @@ import Clases_Cita.PruebaLaboratorio;
 
 
 public class Cultivo extends PruebaLaboratorio{
-    private String Descripcion;
+    private String nombreDePrueba; //este contendra las subClases de cultivo
     private double precio;
     
-    public Cultivo(String Descripcion, String descripcion, double precioExamen) {
+    public Cultivo(String nombreDepruebaP, String descripcion, double precioExamen) {
         super(descripcion, precioExamen);
-        this.Descripcion = Descripcion;
+        this.nombreDePrueba = nombreDepruebaP;
         this.precio = precioExamen;
     }
 
@@ -18,12 +18,12 @@ public class Cultivo extends PruebaLaboratorio{
     
     @Override
     public String getDescripcion() {
-        return Descripcion;
+        return nombreDePrueba;
     }
 
     @Override
     public void setDescripcion(String descripcion) {
-       this.Descripcion = descripcion;
+       this.nombreDePrueba = descripcion;
     }
 
     @Override

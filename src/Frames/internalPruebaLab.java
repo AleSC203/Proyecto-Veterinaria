@@ -35,6 +35,9 @@ public class internalPruebaLab extends javax.swing.JInternalFrame {
         jSeparator2 = new javax.swing.JToolBar.Separator();
         btnEliminar = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
+        btnSalir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaPruebasLaboratorio = new javax.swing.JList<>();
 
         btnAgregar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
@@ -89,20 +92,40 @@ public class internalPruebaLab extends javax.swing.JInternalFrame {
         jToolBar1.add(btnEliminar);
         jToolBar1.add(jSeparator3);
 
+        btnSalir.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salida.png"))); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.setFocusable(false);
+        btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnSalir);
+
+        jScrollPane1.setViewportView(listaPruebasLaboratorio);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addGap(77, 77, 77)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 323, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 49, Short.MAX_VALUE))
         );
 
         pack();
@@ -166,16 +189,24 @@ public class internalPruebaLab extends javax.swing.JInternalFrame {
 //        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JList<String> listaPruebasLaboratorio;
     // End of variables declaration//GEN-END:variables
 }
