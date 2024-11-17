@@ -37,6 +37,7 @@ public class OpcionesVeterinaria extends javax.swing.JFrame {
         opcionManEspeciesyRazas = new javax.swing.JMenuItem();
         opcionManPruebasLab = new javax.swing.JMenuItem();
         opcionManMotivo = new javax.swing.JMenuItem();
+        opcionMantenimientoVacuna = new javax.swing.JMenuItem();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -152,6 +153,14 @@ public class OpcionesVeterinaria extends javax.swing.JFrame {
         });
         editMenu.add(opcionManMotivo);
 
+        opcionMantenimientoVacuna.setText("Mantenimiento Vacunas");
+        opcionMantenimientoVacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionMantenimientoVacunaActionPerformed(evt);
+            }
+        });
+        editMenu.add(opcionMantenimientoVacuna);
+
         menuBar.add(editMenu);
 
         setJMenuBar(menuBar);
@@ -221,6 +230,13 @@ public class OpcionesVeterinaria extends javax.swing.JFrame {
         obj.setVisible(true);
     }//GEN-LAST:event_opcionProcesosCitasActionPerformed
 
+    private void opcionMantenimientoVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionMantenimientoVacunaActionPerformed
+        // TODO add your handling code here:
+        ventanaMantenimientoVacunas obj = new ventanaMantenimientoVacunas();
+        desktopPane.add(obj);
+        obj.setVisible(true);
+    }//GEN-LAST:event_opcionMantenimientoVacunaActionPerformed
+
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -272,6 +288,7 @@ public class OpcionesVeterinaria extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionManEspeciesyRazas;
     private javax.swing.JMenuItem opcionManMotivo;
     private javax.swing.JMenuItem opcionManPruebasLab;
+    private javax.swing.JMenuItem opcionMantenimientoVacuna;
     private javax.swing.JMenuItem opcionProcesosCitas;
     private javax.swing.JMenu opcionSalir;
     private javax.swing.JMenuItem openMenuItem;

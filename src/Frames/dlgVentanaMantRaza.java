@@ -5,6 +5,8 @@ import ClasesPaciente.Raza;
 import static Frames.TipoDeEdicion.AGREGAR;
 import static Frames.TipoDeEdicion.CONSULTAR;
 import static Frames.TipoDeEdicion.MODIFICAR;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -219,13 +221,18 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
                 break;
         }
         if (razaCreada != null) {
-             mantenimientoRaza.setTipoRaza(razaCreada); //Esto lo hace para que en el otro frame ya tenga el nombre de la raza
+            try {
+                mantenimientoRaza.setTipoRaza(razaCreada); //Esto lo hace para que en el otro frame ya tenga el nombre de la raza
+                Raza.agregar(razaCreada);
+            } catch (Exception ex) {
+                Logger.getLogger(dlgVentanaMantRaza.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else{
             JOptionPane.showMessageDialog(this, "No se ha creado una raza válida.");
         }
         
-        mantenimientoRaza.setTipoRaza(razaCreada);
+       
         this.dispose();
     }//GEN-LAST:event_btnAceptarRazaActionPerformed
 

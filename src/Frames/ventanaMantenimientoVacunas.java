@@ -8,6 +8,7 @@ import ClasesPaciente.Raza;
 import javax.swing.DefaultListModel;
 import ClasesPaciente.Raza;
 import Clases_Cita.Motivo;
+import Clases_Cita.Vacunas;
 import java.awt.Container;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,34 +22,34 @@ import javax.swing.*;
  */
 public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
 
-     private DefaultListModel<Raza> modeloListaAnimales = new DefaultListModel<>();
-    private static Raza raza;
+     private DefaultListModel<Vacunas> modeloListaVacunas = new DefaultListModel<>();
+    private static Vacunas vacuna;
     private String tipoAnimal ;
     
-     public static Raza getTipoRaza() {
-        return raza;
+     public static Vacunas getVacuna() {
+        return vacuna;
     }
 
-    public static void setTipoRaza(Raza tipoRaza) {
-        ventanaMantenimientoVacunas.raza = tipoRaza;
+    public static void setVacuna(Vacunas vacunaP) {
+        ventanaMantenimientoVacunas.vacuna = vacunaP;
     }
    
     public ventanaMantenimientoVacunas() {
         initComponents();
-        listaAnimales.setModel(modeloListaAnimales);
+        listaVacunas.setModel(modeloListaVacunas);
        
         llenarLista();
     }
 
     private void llenarLista(){
         //eliminar todas las filas de la tabla
-       modeloListaAnimales.clear();
+       modeloListaVacunas.clear();
         try {
-            for (Raza raza : Raza.listado()) {
-                modeloListaAnimales.addElement(raza);
+            for (Vacunas vacuna : Vacunas.listado()) {
+                modeloListaVacunas.addElement(vacuna);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage() + "\n" + "No se logro guardar la vacuna en la lista");
         }
     }
    
@@ -58,7 +59,7 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaAnimales = new javax.swing.JList<>();
+        listaVacunas = new javax.swing.JList<>();
         jToolBar1 = new javax.swing.JToolBar();
         btnAgregar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
@@ -71,10 +72,10 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
         btnEliminar1 = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JToolBar.Separator();
 
-        jLabel1.setText("Animales");
+        jLabel1.setText("Vacunas");
 
-        listaAnimales.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(listaAnimales);
+        listaVacunas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(listaVacunas);
 
         btnAgregar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
@@ -185,46 +186,46 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         //Variables en uso
         
-        dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.AGREGAR, null);
+        dlgMantenimientoVacuna obj = new dlgMantenimientoVacuna(TipoDeEdicion.AGREGAR, null);
         //Ventana
         obj.setLocationRelativeTo(null);
         obj.setVisible(true);
 
         //objeto
         
-        if (raza != null) {
+        if (vacuna != null) {
             try {
-//                tipoAnimal = (String) cboTipoAnimal.getSelectedItem();
-                modeloListaAnimales.addElement(raza);
-                Raza.cambiarRuta(raza.getTipoRaza());
-                Raza.agregar(raza);
+                modeloListaVacunas.addElement(vacuna);
+                Vacunas.agregar(vacuna);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "No se ha logrado agragar la vacuna");
             }
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-        if (listaAnimales.getSelectedValue() != null) {
+        if (listaVacunas.getSelectedValue() != null) {
 
-            String nombre = listaAnimales.getSelectedValue().getDescripcion();
+            String nombreVacuna = listaVacunas.getSelectedValue().getNombreVacuna();
             try {
-                raza = Raza.consultar(nombre);
+                vacuna = Vacunas.consultar(nombreVacuna);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Error en la busqueda de la vacuna");
             }
-            if (raza != null) {
-                dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.MODIFICAR, raza);
+            if (vacuna != null) {
+                dlgMantenimientoVacuna obj = new dlgMantenimientoVacuna(TipoDeEdicion.MODIFICAR, vacuna);
                 obj.setLocationRelativeTo(null);
                 obj.setVisible(true);
 
                 //Los modifica en el archivo
                 try {
-                    Raza.modificar(raza);
+                    Vacunas.modificar(vacuna);
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
-                    JOptionPane.showMessageDialog(null, "Error");
+                    JOptionPane.showMessageDialog(null, "Error en la actualización de la Vacuna");
                 }
                   llenarLista(); 
             }
@@ -234,15 +235,15 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         // TODO add your handling code here:
 
-        if (listaAnimales.getSelectedValue() != null) {
-            String nombre = listaAnimales.getSelectedValue().getTipoRaza();
+        if (listaVacunas.getSelectedValue() != null) {
+            String nombreVacuna = listaVacunas.getSelectedValue().getNombreVacuna();
             try {
-                raza = Raza.consultar(nombre);
+                vacuna = Vacunas.consultar(nombreVacuna);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 JOptionPane.showMessageDialog(null, "Error");
             }
-            dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.CONSULTAR, raza);
+            dlgMantenimientoVacuna obj = new dlgMantenimientoVacuna(TipoDeEdicion.CONSULTAR, vacuna);
             obj.setModal(true);
             obj.setVisible(true);
         }
@@ -250,14 +251,14 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
       
-        if (listaAnimales.getSelectedIndex() != -1) {
-            int codigo = (Integer)modeloListaAnimales.indexOf(listaAnimales.getSelectedValue());
+        if (listaVacunas.getSelectedIndex() != -1) {
+            int codigo = (Integer)modeloListaVacunas.indexOf(listaVacunas.getSelectedValue());
             
              try {
-                 Raza.eliminar(codigo);
+                 Vacunas.eliminar(codigo);
              } catch (Exception ex) {
                  System.out.println(ex.getMessage());
-                 JOptionPane.showMessageDialog(null, "Error");
+                 JOptionPane.showMessageDialog(null, "Error en la eliminacion de La Vacuna");
              }
             llenarLista();
          }
@@ -283,6 +284,6 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JList<Raza> listaAnimales;
+    private javax.swing.JList<Vacunas> listaVacunas;
     // End of variables declaration//GEN-END:variables
 }

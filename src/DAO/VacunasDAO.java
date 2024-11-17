@@ -3,6 +3,7 @@ package DAO;
 
 
 import Clases_Cita.Motivo;
+import Clases_Cita.Vacunas;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,10 +17,10 @@ import java.util.List;
  *
  * @author Estudiante
  */
-public class Vacunas {
+public class VacunasDAO {
     //ruta del archivo
     //System.getProperty("user.dir") ruta de trabajo del proyecto
-    private  String RUTA_ARCHIVO; 
+    private  String RUTA_ARCHIVO = System.getProperty("user.dir") + "D:\\Proyecto\\ProyectoVeterinaria\\src\\Archivos\\Vacunas.txt";; 
     
     //leer y escribir en los archivos
     private ObjectOutputStream oEscritor;
@@ -30,21 +31,21 @@ public class Vacunas {
     private FileInputStream oFileInputStream;
     
     //para los metodos de modificar y eliminar
-    private List<Motivo> arrayNacionalidad;
+    private List<Vacunas> arrayVacunas;
     
     //patron Singleton
     //Patron singleton permite tener una unica instancia de un objeto
-    private static Vacunas instance = null;
+    private static VacunasDAO instance = null;
     
     //constructor sin nada
-    private Vacunas(){
+    private VacunasDAO(){
         
     }
     
     
-    public static Vacunas getInstance(){
+    public static VacunasDAO getInstance(){
         if (instance == null) {
-            instance = new Vacunas();
+            instance = new VacunasDAO();
         }
         return instance;
     }
@@ -123,7 +124,7 @@ public class Vacunas {
     
     //Patron C.R.U.D patron para almacenar informacion 
     //C. Create R. Read U. Update D. Delete
-    public void agregar(Motivo motivoP)throws Exception{
+    public void agregar(Vacunas vacunasP)throws Exception{
         
         try {
             
@@ -132,7 +133,7 @@ public class Vacunas {
                 if (oEscritor != null) {
                     
                     //escribir el objeto en el archivo
-                    oEscritor.writeObject(motivoP);
+                    oEscritor.writeObject(vacunasP);
                     
                     //Limpiar el buffer para dejar los datos fijos en el archivo
                     oEscritor.flush();
@@ -153,15 +154,15 @@ public class Vacunas {
     
     
     
-    public Motivo consultar(int codigo)throws Exception{
-        Motivo oRetornar = null;
+    public Vacunas consultar(String codigo)throws Exception{
+        Vacunas oRetornar = null;
         
         try {
                 this.abrirArchivoInput();
                 //while hasta generar error
                 while (true) {
-                    oRetornar = (Motivo)oLector.readObject();
-                    if (oRetornar.getCodigo()== codigo) {
+                    oRetornar = (Vacunas)oLector.readObject();
+                    if (oRetornar.getNombreVacuna().equalsIgnoreCase(codigo)) {
                         return oRetornar;
                     }
                 }
@@ -187,11 +188,11 @@ public class Vacunas {
         }
         
         
-        if (!arrayNacionalidad.isEmpty()) {
+        if (!arrayVacunas.isEmpty()) {
             
             this.abrirArchivoOutput();
-            for (Motivo nacionalidad : arrayNacionalidad) {
-                oEscritor.writeObject(nacionalidad);
+            for (Vacunas vacuna : arrayVacunas) {
+                oEscritor.writeObject(vacuna);
             }
             oEscritor.flush();
         }
@@ -202,21 +203,21 @@ public class Vacunas {
     
     
     
-    public void modificar(Motivo motivoP)throws Exception{
-        arrayNacionalidad = new ArrayList<>();
+    public void modificar(Vacunas vacunaP)throws Exception{
+        arrayVacunas = new ArrayList<>();
         
         try {
             
                 abrirArchivoInput();
-                Motivo temp = null;
+                Vacunas temp = null;
                 while (true) {
                     
-                    temp = (Motivo)oLector.readObject();
+                    temp = (Vacunas)oLector.readObject();
                     
-                    if (temp.getCodigo()== motivoP.getCodigo()) {
-                       temp = motivoP;
+                    if (temp.getCodigo()== vacunaP.getCodigo()) {
+                       temp = vacunaP;
                     }
-                     arrayNacionalidad.add(temp);
+                     arrayVacunas.add(temp);
                 }
         
         } catch (Exception e) {
@@ -230,14 +231,14 @@ public class Vacunas {
     
     
     public void eliminar(int codigo)throws Exception{
-        arrayNacionalidad = new ArrayList<>();
+        arrayVacunas = new ArrayList<>();
         try {
             abrirArchivoInput();
-            Motivo temp = null;
+            Vacunas temp = null;
             while (true) {
-                temp = (Motivo)oLector.readObject();
+                temp = (Vacunas)oLector.readObject();
                 if (temp.getCodigo()!= codigo) {
-                    arrayNacionalidad.add(temp);
+                    arrayVacunas.add(temp);
                 }
             }
         } catch (Exception e) {
@@ -247,29 +248,23 @@ public class Vacunas {
         }
     }
     
-    public List<Motivo> listado() throws Exception{
-        arrayNacionalidad = new ArrayList<>();
+    public List<Vacunas> listado() throws Exception{
+        arrayVacunas = new ArrayList<>();
         
         try {
             
                 abrirArchivoInput();
                 while (true) {
-                    arrayNacionalidad.add((Motivo) oLector.readObject());
+                    arrayVacunas.add((Vacunas) oLector.readObject());
                 }
             
         } catch (Exception e) {
         } finally {
             cerrarArchivoInput();
         }
-        return arrayNacionalidad;
+        return arrayVacunas;
     }
     
-    public void setRuta_Archivo(String animal) {
-        if (animal.equalsIgnoreCase("Gato")) {
-            this.RUTA_ARCHIVO = System.getProperty("user.dir") + "D:\\Proyecto\\ProyectoVeterinaria\\src\\Archivos\\MotivoGato.txt";
-        } else if (animal.equalsIgnoreCase("Perro")) {
-            this.RUTA_ARCHIVO = System.getProperty("user.dir") + "D:\\Proyecto\\ProyectoVeterinaria\\src\\Archivos\\MotivoPerro.txt";
-        }
-    }
+    
     
 }

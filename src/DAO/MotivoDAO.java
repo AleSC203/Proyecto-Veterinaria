@@ -30,7 +30,7 @@ public class MotivoDAO {
     private FileInputStream oFileInputStream;
     
     //para los metodos de modificar y eliminar
-    private List<Motivo> arrayNacionalidad;
+    private List<Motivo> arrayMotivo;
     
     //patron Singleton
     //Patron singleton permite tener una unica instancia de un objeto
@@ -187,10 +187,10 @@ public class MotivoDAO {
         }
         
         
-        if (!arrayNacionalidad.isEmpty()) {
+        if (!arrayMotivo.isEmpty()) {
             
             this.abrirArchivoOutput();
-            for (Motivo nacionalidad : arrayNacionalidad) {
+            for (Motivo nacionalidad : arrayMotivo) {
                 oEscritor.writeObject(nacionalidad);
             }
             oEscritor.flush();
@@ -203,7 +203,7 @@ public class MotivoDAO {
     
     
     public void modificar(Motivo motivoP)throws Exception{
-        arrayNacionalidad = new ArrayList<>();
+        arrayMotivo = new ArrayList<>();
         
         try {
             
@@ -216,7 +216,7 @@ public class MotivoDAO {
                     if (temp.getCodigo()== motivoP.getCodigo()) {
                        temp = motivoP;
                     }
-                     arrayNacionalidad.add(temp);
+                     arrayMotivo.add(temp);
                 }
         
         } catch (Exception e) {
@@ -230,14 +230,14 @@ public class MotivoDAO {
     
     
     public void eliminar(int codigo)throws Exception{
-        arrayNacionalidad = new ArrayList<>();
+        arrayMotivo = new ArrayList<>();
         try {
             abrirArchivoInput();
             Motivo temp = null;
             while (true) {
                 temp = (Motivo)oLector.readObject();
                 if (temp.getCodigo()!= codigo) {
-                    arrayNacionalidad.add(temp);
+                    arrayMotivo.add(temp);
                 }
             }
         } catch (Exception e) {
@@ -248,20 +248,20 @@ public class MotivoDAO {
     }
     
     public List<Motivo> listado() throws Exception{
-        arrayNacionalidad = new ArrayList<>();
+        arrayMotivo = new ArrayList<>();
         
         try {
             
                 abrirArchivoInput();
                 while (true) {
-                    arrayNacionalidad.add((Motivo) oLector.readObject());
+                    arrayMotivo.add((Motivo) oLector.readObject());
                 }
             
         } catch (Exception e) {
         } finally {
             cerrarArchivoInput();
         }
-        return arrayNacionalidad;
+        return arrayMotivo;
     }
     
     public void setRuta_Archivo(String animal) {

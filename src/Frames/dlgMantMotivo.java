@@ -4,6 +4,7 @@ package Frames;
 import ClasesPaciente.Raza;
 import Clases_Cita.Motivo;
 import Clases_Cita.TipoMotivo;
+import Clases_Cita.Vacunas;
 import Clases_Cita.tipoVacuna;
 import static Frames.TipoDeEdicion.AGREGAR;
 import static Frames.TipoDeEdicion.CONSULTAR;
@@ -74,7 +75,7 @@ public class dlgMantMotivo extends javax.swing.JDialog {
     
     public void llenarComboVacunas(){
        try {
-        for (tipoVacuna vacuna : tipoVacuna.values()) {
+        for (Vacunas vacuna : Vacunas.listado()) {
             cboTipoVacuna.addItem(vacuna);
         }
     } catch (NullPointerException e) {
@@ -344,7 +345,7 @@ public class dlgMantMotivo extends javax.swing.JDialog {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cboMotivo;
-    private javax.swing.JComboBox<tipoVacuna> cboTipoVacuna;
+    private javax.swing.JComboBox<Vacunas> cboTipoVacuna;
     private javax.swing.JCheckBox checkAplicaExamen;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -7,11 +7,13 @@ public abstract class PruebaLaboratorio {
     private static int cantPrueba;//Es para que no se repitan las pruebas   
     private int numPrueba;
     private double precioExamen;
-    private String descripcion;
+    private String nombrePrueba;
+    
 
-    public PruebaLaboratorio(String descripcion, double precioExamen) {
+    public PruebaLaboratorio(String descripcion, double precioExamen ) {
         this.numPrueba = ++cantPrueba;
-        this.precioExamen = 0;
+        this.precioExamen = precioExamen;
+        this.nombrePrueba = descripcion;
 
     }
 
