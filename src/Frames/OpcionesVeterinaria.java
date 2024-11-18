@@ -1,7 +1,14 @@
 
 package Frames;
 
+import Clases_Cita.PruebaLaboratorio;
+import HijasPruebasLaboratorio.Cultivo;
+import HijasPruebasLaboratorio.Heces;
+import HijasPruebasLaboratorio.Orina;
+import HijasPruebasLaboratorio.Sangre;
 import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -9,7 +16,7 @@ public class OpcionesVeterinaria extends javax.swing.JFrame {
 
         public OpcionesVeterinaria() {
         initComponents();
-
+            
     }
 
     @SuppressWarnings("unchecked")

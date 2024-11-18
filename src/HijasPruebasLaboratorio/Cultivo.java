@@ -2,19 +2,17 @@
 package HijasPruebasLaboratorio;
 
 import Clases_Cita.PruebaLaboratorio;
+import java.io.Serializable;
 
 
-public class Cultivo extends PruebaLaboratorio{
+public class Cultivo extends PruebaLaboratorio implements Serializable{
     private String nombreDePrueba; //este contendra las subClases de cultivo
     private double precio;
     
-    public Cultivo(String nombreDepruebaP, String descripcion, double precioExamen) {
-        super(descripcion, precioExamen);
-        this.nombreDePrueba = nombreDepruebaP;
-        this.precio = precioExamen;
+    public Cultivo() {
+        super("Cultivo", 0);
+       
     }
-
-     
     
     @Override
     public String getDescripcion() {

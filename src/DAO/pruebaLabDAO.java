@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
 public class pruebaLabDAO {
     //ruta del archivo
     //System.getProperty("user.dir") ruta de trabajo del proyecto
-    private final String RUTA_ARCHIVO = System.getProperty("user.dir")+ "\\src\\Archivo\\Nacionalidad.txt";//buscar ruta
+    private final String RUTA_ARCHIVO = System.getProperty("user.dir")+ "\\src\\Archivos\\PruebasLaboratorio.txt";
     
     //leer y escribir en los archivos
     private ObjectOutputStream oEscritor;
@@ -33,14 +34,14 @@ public class pruebaLabDAO {
     private FileInputStream oFileInputStream;
     
     //para los metodos de modificar y eliminar
-    private List<PruebaLaboratorio> arrayNacionalidad;
+    private List<PruebaLaboratorio> arrayPruebas;
     
     //patron Singleton
     //Patron singleton permite tener una unica instancia de un objeto
     private static pruebaLabDAO instance = null;
     
     //constructor sin nada
-    private pruebaLabDAO(){
+    public pruebaLabDAO(){
         
     }
     
@@ -127,36 +128,63 @@ public class pruebaLabDAO {
     //Patron C.R.U.D patron para almacenar informacion 
     //C. Create R. Read U. Update D. Delete
     public void agregar(PruebaLaboratorio pruebaLab)throws Exception{
-        
-        try {
-            
-                this.abrirArchivoOutput();
-                
-                if (oEscritor != null) {
-                    
-                    //escribir el objeto en el archivo
-                    oEscritor.writeObject(pruebaLab);
-                    
-                    //Limpiar el buffer para dejar los datos fijos en el archivo
-                    oEscritor.flush();
-                    
-                    //por lo que entiendo el write los escrive en el archivo pero no del todo sino que lo deja
-                    //en un estado congelado y el flush lo guarda permanentemente 
-                }
-                
-
+       try {
+            this.abrirArchivoOutput();
+            if (oEscritor != null) {
+                //escribir el objeto en el archivo
+                oEscritor.writeObject(pruebaLab);
+                //Limpiar el buffer para dejar los datos fijos en el archivo
+                oEscritor.flush();
+            }
         } catch (Exception e) {
             throw e;
         }
         finally{
             this.cerrarArchivoOutput();
-            //Siempre se ejucuta el finally de esta manera siempre nos aseguraremos de cerrar correctamente los archivos
         }
     }
+//    
+//    public List<PruebaLaboratorio> consultarPruebas(int codigo) throws Exception{
+//        List<PruebaLaboratorio> arrayPruebas = new ArrayList<>();
+//        try {
+//            
+//            while (true) {                
+//                int pruebaID = codigo;
+//                
+//                PruebaLaboratorio prueba = Switch (pruebaID){
+//                case 1 -> new Sangre();
+//                case 2 ->
+//            }
+//                
+//            }
+//        } catch (Exception e) {
+//        }
+//    }
+//    
     
+     public List<PruebaLaboratorio> consultarArray()throws Exception{
+        PruebaLaboratorio oRetornar = null;
+        List <PruebaLaboratorio> arrayprueba =  new ArrayList<>();
+        try {
+                this.abrirArchivoInput();
+                //while hasta generar error
+                while (true) {
+                    oRetornar = (PruebaLaboratorio)oLector.readObject();
+                       arrayprueba.add(oRetornar);
+                    
+                }
+       
+        
+        } catch (Exception e) { //no se pone nada porque el while genera error
+            
+        }finally{
+            this.cerrarArchivoInput();
+             //Siempre se ejucuta el finally de esta manera siempre nos aseguraremos de cerrar correctamente los archivos
+        }
+        return arrayprueba;
+    }
     
-    
-    public PruebaLaboratorio consultar(int codigo)throws Exception{
+    public PruebaLaboratorio consultar(String codigo)throws Exception{
         PruebaLaboratorio oRetornar = null;
         
         try {
@@ -164,7 +192,7 @@ public class pruebaLabDAO {
                 //while hasta generar error
                 while (true) {
                     oRetornar = (PruebaLaboratorio)oLector.readObject();
-                    if (oRetornar.getNumPrueba()== codigo) {
+                    if (oRetornar.getDescripcion().equalsIgnoreCase(codigo)) {
                         return oRetornar;
                     }
                 }
@@ -190,10 +218,10 @@ public class pruebaLabDAO {
         }
         
         
-        if (!arrayNacionalidad.isEmpty()) {
+        if (!arrayPruebas.isEmpty()) {
             
             this.abrirArchivoOutput();
-            for (PruebaLaboratorio nacionalidad : arrayNacionalidad) {
+            for (PruebaLaboratorio nacionalidad : arrayPruebas) {
                 oEscritor.writeObject(nacionalidad);
             }
             oEscritor.flush();
@@ -206,7 +234,7 @@ public class pruebaLabDAO {
     
     
     public void modificar(PruebaLaboratorio pruebaLab)throws Exception{
-        arrayNacionalidad = new ArrayList<>();
+        arrayPruebas = new ArrayList<>();
         
         try {
             
@@ -219,7 +247,7 @@ public class pruebaLabDAO {
                     if (temp.getNumPrueba()== pruebaLab.getNumPrueba()) {
                        temp = pruebaLab;
                     }
-                     arrayNacionalidad.add(temp);
+                     arrayPruebas.add(temp);
                 }
         
         } catch (Exception e) {
@@ -233,14 +261,14 @@ public class pruebaLabDAO {
     
     
     public void eliminar(int codigo)throws Exception{
-        arrayNacionalidad = new ArrayList<>();
+        arrayPruebas = new ArrayList<>();
         try {
             abrirArchivoInput();
             PruebaLaboratorio temp = null;
             while (true) {
                 temp = (PruebaLaboratorio)oLector.readObject();
                 if (temp.getNumPrueba()!= codigo) {
-                    arrayNacionalidad.add(temp);
+                    arrayPruebas.add(temp);
                 }
             }
         } catch (Exception e) {
@@ -251,20 +279,20 @@ public class pruebaLabDAO {
     }
     
     public List<PruebaLaboratorio> listado() throws Exception{
-        arrayNacionalidad = new ArrayList<>();
+        arrayPruebas = new ArrayList<>();
         
         try {
             
                 abrirArchivoInput();
                 while (true) {
-                    arrayNacionalidad.add((PruebaLaboratorio) oLector.readObject());
+                    arrayPruebas.add((PruebaLaboratorio) oLector.readObject());
                 }
             
         } catch (Exception e) {
         } finally {
             cerrarArchivoInput();
         }
-        return arrayNacionalidad;
+        return arrayPruebas;
     }
     
 }

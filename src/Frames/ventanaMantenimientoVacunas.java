@@ -22,7 +22,7 @@ import javax.swing.*;
  */
 public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
 
-     private DefaultListModel<Vacunas> modeloListaVacunas = new DefaultListModel<>();
+    private DefaultListModel<Vacunas> modeloListaVacunas = new DefaultListModel<>();
     private static Vacunas vacuna;
     private String tipoAnimal ;
     
@@ -37,7 +37,6 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
     public ventanaMantenimientoVacunas() {
         initComponents();
         listaVacunas.setModel(modeloListaVacunas);
-       
         llenarLista();
     }
 
@@ -200,8 +199,11 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
                      Vacunas.agregar(vacuna);
                  } catch (Exception ex) {
                      System.out.println(ex.getMessage());
-                     JOptionPane.showMessageDialog(null, "No se ha logrado agragar la vacuna");
+                     JOptionPane.showMessageDialog(null, "No se ha logrado agregar la vacuna");
                  }
+             }
+             else{
+                 JOptionPane.showMessageDialog(null, "La vacuna esta null");
              }} catch (Exception ex) {
              Logger.getLogger(ventanaMantenimientoVacunas.class.getName()).log(Level.SEVERE, null, ex);
          }

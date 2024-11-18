@@ -1,15 +1,15 @@
 
 package HijasPruebasLaboratorio;
 
-public class Sangre extends Clases_Cita.PruebaLaboratorio {
+import java.io.Serializable;
+
+public class Sangre extends Clases_Cita.PruebaLaboratorio implements Serializable {
 
     private String nombrePrueba;//Contendra el nonbre de la subClase
     private double costo;
 
-    public Sangre(String nombrePruebaP, double precioExamen) {
-        super(nombrePruebaP, precioExamen);
-        this.nombrePrueba = nombrePruebaP;
-        this.costo = precioExamen;
+    public Sangre() {
+        super("Sangre", 0);
     }
 
     @Override

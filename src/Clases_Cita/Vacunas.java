@@ -77,10 +77,10 @@ public class Vacunas {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Le pertenece a un: ").append(animalPertenece + "\n");
-        sb.append("Nombre de Vacuna: ").append(nombreVacuna+ "\n");
-        sb.append("El costo de la Vacuna es: ").append(costo+ "\n");
-        sb.append("El codig de la Vacuna es: ").append(codigo+ "\n");
+        sb.append("Animal: ").append(animalPertenece + "\n");
+        sb.append(" Nombre: ").append(nombreVacuna+ "\n");
+        sb.append(" costo: ").append(costo+ "\n");
+        sb.append(" codigo: ").append(codigo+ "\n");
         sb.append("\n");
         return sb.toString();
     }

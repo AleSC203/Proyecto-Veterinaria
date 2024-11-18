@@ -25,6 +25,7 @@ public class dlgMantenimientoVacuna extends javax.swing.JDialog {
 
     public dlgMantenimientoVacuna(TipoDeEdicion tipoEdit, Vacunas vacunaP) throws Exception {
         initComponents();
+        this.setModal(true);
         conocerCodigo();
         switch (tipoEdit) {
             
@@ -187,7 +188,7 @@ public class dlgMantenimientoVacuna extends javax.swing.JDialog {
          switch (tipo) {
             case AGREGAR: {
                 try {
-                    if (Raza.consultar(txtTipoVacuna.getText()) == null) {
+                    if (Vacunas.consultar(txtTipoVacuna.getText()) == null) {
                         this.vacuna = new Vacunas((String)this.cboAnimalVacuna.getSelectedItem(), txtTipoVacuna.getText(),Integer.parseInt(txtCostoVacuna.getText()));
                     } else {
                         JOptionPane.showMessageDialog(this,"Esta vacuna ya esta registrada");
@@ -207,17 +208,10 @@ public class dlgMantenimientoVacuna extends javax.swing.JDialog {
                 }
                 break;
         }
-        if (this.vacuna != null) {
-             try {
+        
                  ventanaMantenimientoVacunas.setVacuna(this.vacuna); //Esto lo hace para que en el otro frame ya tenga el nombre de la raza
 //                 Vacunas.agregar(vacuna);
-             } catch (Exception ex) {
-                 Logger.getLogger(dlgMantenimientoVacuna.class.getName()).log(Level.SEVERE, null, ex);
-             }
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "No se ha registrado la Vacuna en los archivos");
-        }
+            
         
         
         if (((String)cboAnimalVacuna.getSelectedItem()).equalsIgnoreCase("Gato")) {

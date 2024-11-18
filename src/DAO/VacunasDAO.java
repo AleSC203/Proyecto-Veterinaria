@@ -20,7 +20,8 @@ import java.util.List;
 public class VacunasDAO {
     //ruta del archivo
     //System.getProperty("user.dir") ruta de trabajo del proyecto
-    private  String RUTA_ARCHIVO = System.getProperty("user.dir") + "D:\\Proyecto\\ProyectoVeterinaria\\src\\Archivos\\Vacunas.txt";; 
+    private final String RUTA_ARCHIVO = System.getProperty("user.dir")+ "\\src\\Archivos\\Vacunas.txt";
+     
     
     //leer y escribir en los archivos
     private ObjectOutputStream oEscritor;

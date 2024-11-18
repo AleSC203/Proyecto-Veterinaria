@@ -1,15 +1,16 @@
 
 package HijasPruebasLaboratorio;
 
+import java.io.Serializable;
 
-public class Orina extends Clases_Cita.PruebaLaboratorio{
+
+public class Orina extends Clases_Cita.PruebaLaboratorio implements Serializable{
     private String nombrePrueba;//Este contendra el nombre de la subClase
     private double costo ;
 
-    public Orina(String nombrePrueba, String descripcion, double precioExamen) {
-        super(descripcion, precioExamen);
-        this.nombrePrueba = nombrePrueba;
-        this.costo = precioExamen;
+    public Orina() {
+        super("Orina", 0);
+        
     }
     
 
