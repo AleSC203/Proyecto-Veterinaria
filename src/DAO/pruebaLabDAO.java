@@ -143,47 +143,29 @@ public class pruebaLabDAO {
             this.cerrarArchivoOutput();
         }
     }
-//    
-//    public List<PruebaLaboratorio> consultarPruebas(int codigo) throws Exception{
-//        List<PruebaLaboratorio> arrayPruebas = new ArrayList<>();
-//        try {
-//            
-//            while (true) {                
-//                int pruebaID = codigo;
-//                
-//                PruebaLaboratorio prueba = Switch (pruebaID){
-//                case 1 -> new Sangre();
-//                case 2 ->
-//            }
-//                
-//            }
-//        } catch (Exception e) {
-//        }
-//    }
-//    
+
     
-     public List<PruebaLaboratorio> consultarArray()throws Exception{
+    public List<PruebaLaboratorio> consultarArray() throws Exception {
         PruebaLaboratorio oRetornar = null;
-        List <PruebaLaboratorio> arrayprueba =  new ArrayList<>();
+        List<PruebaLaboratorio> arrayprueba = new ArrayList<>();
         try {
-                this.abrirArchivoInput();
-                //while hasta generar error
-                while (true) {
-                    oRetornar = (PruebaLaboratorio)oLector.readObject();
-                       arrayprueba.add(oRetornar);
-                    
-                }
-       
-        
-        } catch (Exception e) { //no se pone nada porque el while genera error
-            
-        }finally{
+            this.abrirArchivoInput();
+            //while hasta generar error
+            while (true) {
+                oRetornar = (PruebaLaboratorio) oLector.readObject();
+                arrayprueba.add(oRetornar);
+
+            }
+
+        } catch (Exception e) { 
+        } finally {
             this.cerrarArchivoInput();
-             //Siempre se ejucuta el finally de esta manera siempre nos aseguraremos de cerrar correctamente los archivos
+            //Siempre se ejucuta el finally de esta manera siempre nos aseguraremos de cerrar correctamente los archivos
         }
         return arrayprueba;
     }
     
+
     public PruebaLaboratorio consultar(String codigo)throws Exception{
         PruebaLaboratorio oRetornar = null;
         

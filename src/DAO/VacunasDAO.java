@@ -125,35 +125,24 @@ public class VacunasDAO {
     
     //Patron C.R.U.D patron para almacenar informacion 
     //C. Create R. Read U. Update D. Delete
-    public void agregar(Vacunas vacunasP)throws Exception{
-        
+    public void agregar(Vacunas vacuna)throws Exception{
         try {
-            
-                this.abrirArchivoOutput();
-                
-                if (oEscritor != null) {
-                    
-                    //escribir el objeto en el archivo
-                    oEscritor.writeObject(vacunasP);
-                    
-                    //Limpiar el buffer para dejar los datos fijos en el archivo
-                    oEscritor.flush();
-                    
-                    //por lo que entiendo el write los escrive en el archivo pero no del todo sino que lo deja
-                    //en un estado congelado y el flush lo guarda permanentemente 
-                }
-                
-
+            this.abrirArchivoOutput();
+            if (oEscritor != null) {
+                //escribir el objeto en el archivo
+                oEscritor.writeObject(vacuna);
+                //Limpiar el buffer para dejar los datos fijos en el archivo
+                oEscritor.flush();
+            }
         } catch (Exception e) {
             throw e;
         }
         finally{
             this.cerrarArchivoOutput();
-            //Siempre se ejucuta el finally de esta manera siempre nos aseguraremos de cerrar correctamente los archivos
         }
     }
-    
-    
+
+
     
     public Vacunas consultar(String codigo)throws Exception{
         Vacunas oRetornar = null;

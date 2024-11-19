@@ -2,16 +2,18 @@
 package ClasesPaciente;
 
 import DAO.RazaDAO;
+import java.io.Serializable;
 import java.util.List;
 import javax.swing.JOptionPane;
 
 
-public class Raza {
+public class Raza implements Serializable{
     //Para perros hay aproximadamente 343  y para gatos hay 100
 private String tipoRaza; //Perro o gato
 private String descripcion; //Este es el nombre 
 private static int incremetaNumRaza = 0;
 private int numeroRaza;
+private int codigoAnimal;
 
     public Raza(String tipoRaza, String descripcionP) {
         this.tipoRaza = tipoRaza;
@@ -23,6 +25,7 @@ private int numeroRaza;
     public Raza() {
     }
     
+   
 
     public String getTipoRaza() {
         return tipoRaza;
@@ -56,10 +59,7 @@ private int numeroRaza;
     
     
     
-    //BLL
-    public static void cambiarRuta(String animal){
-        RazaDAO.getInstance().setRuta_Archivo(animal);
-    }
+    
     public static void agregar(Raza nombreRaza) throws Exception{
         RazaDAO.getInstance().agregar(nombreRaza);
         JOptionPane.showMessageDialog(null, "Se ha creado con exito");

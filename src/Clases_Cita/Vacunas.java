@@ -4,11 +4,12 @@ package Clases_Cita;
 import ClasesPaciente.Raza;
 import DAO.RazaDAO;
 import DAO.VacunasDAO;
+import java.io.Serializable;
 import java.util.List;
 import javax.swing.JOptionPane;
 
 
-public class Vacunas {
+public class Vacunas implements Serializable{
    private String animalPertenece;
    private String nombreVacuna;
    private int costo;

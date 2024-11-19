@@ -19,12 +19,13 @@ import javax.swing.JOptionPane;
 public class dlgMantPruebaLab extends javax.swing.JDialog {
     private TipoDeEdicion tipo;
     private PruebaLaboratorio pruebaLab;
-    private ArrayList<PruebaLaboratorio> arrayPruebas;
+    private PruebaLaboratorio pruebaAgregar; // Uso esta variable para asignarle el tipo de categoria y despues poder instanciarlo
+   
    
     public dlgMantPruebaLab(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        arrayPruebas = new ArrayList<>();
+       
     }
     
     public dlgMantPruebaLab(TipoDeEdicion edit, PruebaLaboratorio pruebaLabP){
@@ -34,6 +35,7 @@ public class dlgMantPruebaLab extends javax.swing.JDialog {
             case AGREGAR:
                this.txtNombreSubCategoria.setEnabled(true);
                this.txtPrecioSubCategoria.setEnabled(true);
+               this.pruebaAgregar = pruebaLabP;
                 break;
                 
             case MODIFICAR:
@@ -144,14 +146,16 @@ public class dlgMantPruebaLab extends javax.swing.JDialog {
             case AGREGAR: {
                 try {
                     if (PruebaLaboratorio.consultar(txtNombreSubCategoria.getText()) == null) {
-                        this.pruebaLab = new PruebaLaboratorio
+                        this.pruebaLab = pruebaAgregar;
+                        this.pruebaLab.setDescripcion(txtNombreSubCategoria.getText());
+                        this.pruebaLab.setPrecio(Integer.parseInt(txtPrecioSubCategoria.getText()));
                     } else {
                         JOptionPane.showMessageDialog(this,"Esta vacuna ya esta registrada");
                         return;
                     }
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
-                    JOptionPane.showMessageDialog(null, "Error en Agregar la vacuna a los archivos");
+//                    JOptionPane.showMessageDialog(null, "Error en Agregar la Prueba de laboratorio a los archivos");
                 }
             }
 
@@ -159,7 +163,8 @@ public class dlgMantPruebaLab extends javax.swing.JDialog {
 
             case MODIFICAR:
                 if (txtNombreSubCategoria.getText() != null && txtPrecioSubCategoria.getText() != null ) {
-                  this.pruebaLab = new Vacunas((String)this.cboAnimalVacuna.getSelectedItem(), txtTipoVacuna.getText(),Integer.parseInt(txtCostoVacuna.getText()));
+                 this.pruebaLab.setDescripcion(txtNombreSubCategoria.getText());
+                 this.pruebaLab.setPrecio(Integer.parseInt(txtPrecioSubCategoria.getText()));
                 }
                 break;
         }

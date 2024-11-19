@@ -2,6 +2,7 @@
 package Frames;
 
 import Clases_Cita.PruebaLaboratorio;
+import DAO.pruebaLabDAO;
 import HijasPruebasLaboratorio.Cultivo;
 import HijasPruebasLaboratorio.Heces;
 import HijasPruebasLaboratorio.Orina;
@@ -15,8 +16,16 @@ import javax.swing.JOptionPane;
 public class OpcionesVeterinaria extends javax.swing.JFrame {
 
         public OpcionesVeterinaria() {
-        initComponents();
-            
+            initComponents();
+//            try {
+//                PruebaLaboratorio.agregar(new Sangre());
+//                PruebaLaboratorio.agregar(new Orina());
+//                PruebaLaboratorio.agregar(new Heces());
+//                PruebaLaboratorio.agregar(new Cultivo());
+//            } catch (Exception ex) {
+//                Logger.getLogger(OpcionesVeterinaria.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+       
     }
 
     @SuppressWarnings("unchecked")
@@ -149,6 +158,11 @@ public class OpcionesVeterinaria extends javax.swing.JFrame {
 
         opcionManPruebasLab.setMnemonic('d');
         opcionManPruebasLab.setText("Mantenimiento Pruebas Laboratorio");
+        opcionManPruebasLab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionManPruebasLabActionPerformed(evt);
+            }
+        });
         editMenu.add(opcionManPruebasLab);
 
         opcionManMotivo.setMnemonic('c');
@@ -243,6 +257,13 @@ public class OpcionesVeterinaria extends javax.swing.JFrame {
         desktopPane.add(obj);
         obj.setVisible(true);
     }//GEN-LAST:event_opcionMantenimientoVacunaActionPerformed
+
+    private void opcionManPruebasLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionManPruebasLabActionPerformed
+        // TODO add your handling code here:
+        internalPruebaLab obj = new internalPruebaLab();
+        desktopPane.add(obj);
+        obj.setVisible(true);
+    }//GEN-LAST:event_opcionManPruebasLabActionPerformed
 
 
     public static void main(String args[]) {

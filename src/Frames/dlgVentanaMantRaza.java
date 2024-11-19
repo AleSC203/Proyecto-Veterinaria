@@ -15,21 +15,22 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
     private Raza razaCreada;
     private String tipoAnimal;
     
-    public dlgVentanaMantRaza(java.awt.Frame parent, boolean modal) {
+    public dlgVentanaMantRaza(java.awt.Frame parent, boolean modal ) {
         super(parent, modal);
         initComponents();
+         this.setModal(true);
         razaCreada = new Raza();
     }
     
-    public dlgVentanaMantRaza(TipoDeEdicion tipoEdit, Raza raza) {
+    public dlgVentanaMantRaza(TipoDeEdicion tipoEdit, Raza raza, String animal) {
         initComponents();
         switch (tipoEdit) {
             
             case AGREGAR:
                 this.txtNombreRaza.setEnabled(true);
-                this.rdbGato.setEnabled(true);
-                this.rdbPerro.setEnabled(true);
-                
+                this.rdbGato.setEnabled(false);
+                this.rdbPerro.setEnabled(false);
+                this.tipoAnimal = animal;
                 break;
                 
             case MODIFICAR:
@@ -72,6 +73,7 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupAnimales = new javax.swing.ButtonGroup();
         rdbGato = new javax.swing.JRadioButton();
         rdbPerro = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
@@ -85,8 +87,10 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        buttonGroupAnimales.add(rdbGato);
         rdbGato.setText("Gato");
 
+        buttonGroupAnimales.add(rdbPerro);
         rdbPerro.setText("Perro");
 
         jLabel2.setText("Codigo Raza");
@@ -187,7 +191,7 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
             case AGREGAR: {
                 try {
                     if (Raza.consultar(txtNombreRaza.getText()) == null) {
-                        this.tipoAnimal = "";
+                        
                         if (rdbGato.isSelected()) {
                             this.tipoAnimal = "Gato";
                         } else if (rdbPerro.isSelected()) {
@@ -285,6 +289,7 @@ public class dlgVentanaMantRaza extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptarRaza;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.ButtonGroup buttonGroupAnimales;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

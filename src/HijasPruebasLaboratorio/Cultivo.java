@@ -8,12 +8,17 @@ import java.io.Serializable;
 public class Cultivo extends PruebaLaboratorio implements Serializable{
     private String nombreDePrueba; //este contendra las subClases de cultivo
     private double precio;
-    
+    private int codigo;
+
     public Cultivo() {
-        super("Cultivo", 0);
-       
+        super("Cultivo", 4800, 4);
+        nombreDePrueba = "Cultivo";
+        precio = 4800;
+        codigo = 4;
     }
     
+    
+   
     @Override
     public String getDescripcion() {
         return nombreDePrueba;
@@ -32,6 +37,16 @@ public class Cultivo extends PruebaLaboratorio implements Serializable{
     @Override
     public void setPrecio(double precio) {
        this.precio = precio;
+    }
+
+    @Override
+    public int getCodigo() {
+        return codigo;
+    }
+
+    @Override
+    public void setCodigo(int codigoP) {
+        this.codigo = codigoP;
     }
     
 }

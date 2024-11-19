@@ -23,7 +23,8 @@ public class mantenimientoRaza extends javax.swing.JInternalFrame {
 
      private DefaultListModel<Raza> modeloListaAnimales = new DefaultListModel<>();
     private static Raza raza;
-    private String tipoAnimal ;
+    private String tipoAnimal;
+    private String animalAgegar;
     
      public static Raza getTipoRaza() {
         return raza;
@@ -195,8 +196,8 @@ public class mantenimientoRaza extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         //Variables en uso
-        
-        dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.AGREGAR, null);
+        this.tipoAnimal = ((String)cboTipoAnimal.getSelectedItem());
+        dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.AGREGAR, null, this.tipoAnimal);
         //Ventana
         obj.setLocationRelativeTo(null);
         obj.setVisible(true);
@@ -207,7 +208,6 @@ public class mantenimientoRaza extends javax.swing.JInternalFrame {
             try {
 //                tipoAnimal = (String) cboTipoAnimal.getSelectedItem();
                 modeloListaAnimales.addElement(raza);
-                Raza.cambiarRuta(raza.getTipoRaza());
                 Raza.agregar(raza);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
@@ -226,7 +226,7 @@ public class mantenimientoRaza extends javax.swing.JInternalFrame {
                 System.out.println(ex.getMessage());
             }
             if (raza != null) {
-                dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.MODIFICAR, raza);
+                dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.MODIFICAR, raza,raza.getTipoRaza());
                 obj.setLocationRelativeTo(null);
                 obj.setVisible(true);
 
@@ -253,7 +253,7 @@ public class mantenimientoRaza extends javax.swing.JInternalFrame {
                 System.out.println(ex.getMessage());
                 JOptionPane.showMessageDialog(null, "Error");
             }
-            dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.CONSULTAR, raza);
+            dlgVentanaMantRaza obj = new dlgVentanaMantRaza(TipoDeEdicion.CONSULTAR, raza,raza.getTipoRaza());
             obj.setModal(true);
             obj.setVisible(true);
         }

@@ -28,10 +28,22 @@ public class internalPruebaLab extends javax.swing.JInternalFrame {
             cboTipoPruebasLab.setModel(new DefaultComboBoxModel(PruebaLaboratorio.consultarArray().toArray()));
         } catch (Exception ex) {
             Logger.getLogger(internalPruebaLab.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No esta funcionando");
         }
         this.listaPruebasLaboratorio.setModel(modeloListaPruebasLab);
     }
 
+    
+    public void llenarLista(){
+        try {
+            modeloListaPruebasLab.clear();
+            for (PruebaLaboratorio object : PruebaLaboratorio.listado()) {
+                modeloListaPruebasLab.addElement(object);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(internalPruebaLab.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -174,7 +186,7 @@ public class internalPruebaLab extends javax.swing.JInternalFrame {
          try {
              //Variables en uso
              
-             dlgMantPruebaLab obj = new dlgMantPruebaLab(TipoDeEdicion.AGREGAR, null);
+             dlgMantPruebaLab obj = new dlgMantPruebaLab(TipoDeEdicion.AGREGAR, (PruebaLaboratorio)cboTipoPruebasLab.getSelectedItem());
              //Ventana
              obj.setLocationRelativeTo(null);
              obj.setVisible(true);
@@ -256,6 +268,58 @@ public class internalPruebaLab extends javax.swing.JInternalFrame {
 
     private void cboTipoPruebasLabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoPruebasLabActionPerformed
         // TODO add your handling code here:
+        if (((PruebaLaboratorio)cboTipoPruebasLab.getSelectedItem()).getCodigo() == 1) {
+            modeloListaPruebasLab.clear();
+            try {
+                for (PruebaLaboratorio object : PruebaLaboratorio.listado()) {
+                    if (object.getCodigo() == 1) {
+                       modeloListaPruebasLab.addElement(object);  
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(internalPruebaLab.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        if (((PruebaLaboratorio)cboTipoPruebasLab.getSelectedItem()).getCodigo() == 2) {
+            modeloListaPruebasLab.clear();
+            try {
+                for (PruebaLaboratorio object : PruebaLaboratorio.listado()) {
+                    if (object.getCodigo() == 2) {
+                       modeloListaPruebasLab.addElement(object);  
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(internalPruebaLab.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        if (((PruebaLaboratorio)cboTipoPruebasLab.getSelectedItem()).getCodigo() == 3) {
+            modeloListaPruebasLab.clear();
+            try {
+                for (PruebaLaboratorio object : PruebaLaboratorio.listado()) {
+                    if (object.getCodigo() == 3) {
+                       modeloListaPruebasLab.addElement(object);  
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(internalPruebaLab.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        if (((PruebaLaboratorio)cboTipoPruebasLab.getSelectedItem()).getCodigo() == 4) {
+            modeloListaPruebasLab.clear();
+            try {
+                for (PruebaLaboratorio object : PruebaLaboratorio.listado()) {
+                    if (object.getCodigo() == 4) {
+                       modeloListaPruebasLab.addElement(object);  
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(internalPruebaLab.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
     }//GEN-LAST:event_cboTipoPruebasLabActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed

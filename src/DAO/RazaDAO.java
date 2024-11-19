@@ -21,7 +21,7 @@ public class RazaDAO {
 
     //ruta del archivo
     //System.getProperty("user.dir") ruta de trabajo del proyecto
-    private String RUTA_ARCHIVO; //Debo buscar la ruta
+    private String RUTA_ARCHIVO = System.getProperty("user.dir") + "\\src\\Archivos\\Razas.txt"; //Debo buscar la ruta
 
 // \\src\\Archivo\\Razas.txt
     //leer y escribir en los archivos
@@ -240,14 +240,6 @@ public class RazaDAO {
             cerrarArchivoInput();
         }
         return arrayRazas;
-    }
-
-    public void setRuta_Archivo(String animal) {
-        if (animal.equalsIgnoreCase("Gato")) {
-            this.RUTA_ARCHIVO = System.getProperty("user.dir") + "D:\\Proyecto\\ProyectoVeterinaria\\src\\Archivos\\RazasGato.txt";
-        } else if (animal.equalsIgnoreCase("Perro")) {
-            this.RUTA_ARCHIVO = System.getProperty("user.dir") + "D:\\Proyecto\\ProyectoVeterinaria\\src\\Archivos\\RazasPerro.txt";
-        }
     }
 
 }

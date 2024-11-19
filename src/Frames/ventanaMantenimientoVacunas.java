@@ -21,7 +21,6 @@ import javax.swing.*;
  * @author Usuario
  */
 public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
-
     private DefaultListModel<Vacunas> modeloListaVacunas = new DefaultListModel<>();
     private static Vacunas vacuna;
     private String tipoAnimal ;
@@ -33,6 +32,7 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
     public static void setVacuna(Vacunas vacunaP) {
         ventanaMantenimientoVacunas.vacuna = vacunaP;
     }
+    
    
     public ventanaMantenimientoVacunas() {
         initComponents();
@@ -183,30 +183,28 @@ public class ventanaMantenimientoVacunas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-         try {
-             //Variables en uso
-             
-             dlgMantenimientoVacuna obj = new dlgMantenimientoVacuna(TipoDeEdicion.AGREGAR, null);
-             //Ventana
-             obj.setLocationRelativeTo(null);
-             obj.setVisible(true);
-             
-             //objeto
-             
-             if (vacuna != null) {
-                 try {
-                     modeloListaVacunas.addElement(vacuna);
-                     Vacunas.agregar(vacuna);
-                 } catch (Exception ex) {
-                     System.out.println(ex.getMessage());
-                     JOptionPane.showMessageDialog(null, "No se ha logrado agregar la vacuna");
-                 }
-             }
-             else{
-                 JOptionPane.showMessageDialog(null, "La vacuna esta null");
-             }} catch (Exception ex) {
-             Logger.getLogger(ventanaMantenimientoVacunas.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        try {
+            //Variables en uso
+
+            dlgMantenimientoVacuna obj = new dlgMantenimientoVacuna(TipoDeEdicion.AGREGAR, null);
+            //Ventana
+            obj.setModal(true);
+            obj.setLocationRelativeTo(null);
+            obj.setVisible(true);
+
+            //objeto
+            if (vacuna != null) {
+                try {
+                    modeloListaVacunas.addElement(vacuna);
+                    Vacunas.agregar(vacuna);
+                } catch (Exception ex) {
+                    Logger.getLogger(ventanaMantenimientoVacunas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ventanaMantenimientoVacunas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
